@@ -1,0 +1,36 @@
+{
+  "name": "mithril-markdown",
+  "version": "0.0.0",
+  "description": "A markdown component for mithril.",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/erikvullings/mithril-markdown.git"
+  },
+  "typings": "dist/index.d.ts",
+  "scripts": {
+    "link": "npm link",
+    "start": "tsc -w",
+    "build:domain": "typedoc --out ../../docs/typedoc src",
+    "patch-release": "npm version patch --force -m \"Patch release\" && npm publish && git push --follow-tags",
+    "minor-release": "npm version minor --force -m \"Minor release\" && npm publish && git push --follow-tags",
+    "major-release": "npm version major --force -m \"Major release\" && npm publish && git push --follow-tags"
+  },
+  "keywords": [
+    "mithril",
+    "contenteditable",
+    "markdown"
+  ],
+  "author": "Erik Vullings <erik.vullings@gmail.com> (http://www.tno.nl)",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/marked": "^0.6.5",
+    "@types/mithril": "^1.1.16",
+    "cssnano": "^4.1.10",
+    "typedoc": "^0.14.2",
+    "typescript": "^3.4.3"
+  },
+  "dependencies": {
+    "marked": "^0.6.2"
+  }
+}
