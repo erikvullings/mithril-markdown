@@ -14,6 +14,8 @@ export interface IMarkdownEditor extends Attributes {
   options?: MarkedOptions;
   /** Undo buffer limit, @default 10 */
   undoLimit?: number;
+  /** Should the textarea automatically resize */
+  autoResize?: boolean;
   /**
    * When a change occurs, the updated markdown is returned, as well as the HTML.
    * The returned markdown should be used as the markdown input for the editor in
@@ -92,7 +94,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     m.redraw();
   };
 
-  const style = 'margin: 0 10px 0 0; cursor: pointer;';
+  const enabledStyle = 'margin: 0 10px 0 0; cursor: pointer;';
   const disabledStyle =
     'margin: 0 10px 0 0; cursor: not-allowed; color: currentColor; opacity: 0.5; text-decoration: none';
 
@@ -128,7 +130,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
         s => setLinkStyle(state.redoDom, s)
       );
     },
-    view: ({ attrs: { markdown, caretPosition, ...props } }) => {
+    view: ({ attrs: { markdown, caretPosition, autoResize = true, ...props } }) => {
       state.markdown = markdown;
       const { html, isEditing, undo } = state;
 
@@ -141,11 +143,11 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
               },
             },
             [
-              ...commands.map(cmd => m('a', { style, onclick: () => runCmd(cmd) }, cmd.name)),
+              ...commands.map(cmd => m('a', { style: enabledStyle, onclick: () => runCmd(cmd) }, cmd.name)),
               m(
                 'a',
                 {
-                  style: undo.canUndo() ? style : disabledStyle,
+                  style: undo.canUndo() ? enabledStyle : disabledStyle,
                   onclick: () => undoRedoCmd(true),
                   oncreate: ({ dom }) => (state.undoDom = dom as HTMLAnchorElement),
                 },
@@ -154,18 +156,18 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
               m(
                 'a',
                 {
-                  style: undo.canRedo() ? style : disabledStyle,
+                  style: undo.canRedo() ? enabledStyle : disabledStyle,
                   onclick: () => undoRedoCmd(false),
                   oncreate: ({ dom }) => (state.redoDom = dom as HTMLAnchorElement),
                 },
                 ' REDO '
               ),
-              m('a', { style, onclick: stopEditingCmd }, ' STOP '),
+              m('a', { style: enabledStyle, onclick: stopEditingCmd }, ' STOP '),
               m(TextArea, {
                 ...props,
                 caretPosition,
                 initialValue: markdown,
-                autoResize: true,
+                autoResize,
                 onselection: (selection: ISelection) => {
                   state.selection = selection;
                 },
@@ -178,7 +180,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
             ]
           )
         : m(
-            '.text-area',
+            '.html-area',
             {
               onclick: (e: Event) => {
                 state.isEditing = !isLinkClicked(e);

@@ -1,8 +1,6 @@
 import m, { FactoryComponent, Attributes } from 'mithril';
 import { ISelection } from '.';
 
-// declare var M: any;
-
 export interface ITextArea extends Attributes {
   /** Initially displayed value */
   initialValue: string;
@@ -31,6 +29,7 @@ export const TextArea: FactoryComponent<ITextArea> = () => {
     height: number;
     shifted: boolean;
     onselection?: (selection: ISelection) => void;
+    style: string;
   };
 
   const autoResizeTextArea = (autoResize?: boolean) => {
@@ -40,6 +39,7 @@ export const TextArea: FactoryComponent<ITextArea> = () => {
       if (scrollHeight === height) {
         return;
       }
+      state.height = scrollHeight;
       dom.style.height = `${scrollHeight}px`;
     }
   };
@@ -70,53 +70,54 @@ export const TextArea: FactoryComponent<ITextArea> = () => {
   };
 
   return {
-    oninit: ({ attrs: { onselection } }) => {
+    oninit: ({ attrs: { onselection, style, autoResize } }) => {
       state.onselection = onselection;
+      state.style = `${autoResize ? 'box-sizing: border-box; overflow-x: hidden; resize: none;' : ''}${
+        style ? style : ''
+      }${autoResize && style && /max-height/.test(style) ? '' : 'overflow-y: hidden'}`;
     },
     view: ({ attrs }) => {
-      const { initialValue, caretPosition, onchange, className, style, onblur, oninput, autoResize } = attrs;
-      return m(`.input-field`, { className, style }, [
-        m('textarea.materialize-textarea[tabindex=0]', {
-          style: autoResizeTextArea ? 'box-sizing: border-box; overflow: hidden; resize: none;' : undefined,
-          oncreate: ({ dom }) => {
-            state.dom = dom as HTMLTextAreaElement;
-            state.dom.selectionStart = caretPosition;
-            autoResizeTextArea(autoResize);
-            // if (M) {
-            //   M.textareaAutoResize(dom);
-            // }
-          },
-          onblur,
-          // onupdate: () => {
-          //   console.log('updating');
-          //   const { dom, selection: { selectionStart, selectionEnd} } = state;
-          //   if (selectionStart && selectionEnd) {
-          //     console.log(`setting selection from ${selectionStart} - ${selectionEnd}`);
-          //     dom.focus();
-          //     dom.setSelectionRange(selectionStart, selectionEnd);
-          //   }
-          // },
-          onmouseup: selectionHandler,
-          onkeydown: selectionHandler,
-          onkeyup: selectionHandler,
-          oninput: (e: Event) => {
-            (e as any).redraw = false;
-            const { dom } = state;
-            autoResizeTextArea(autoResize);
-            if (oninput) {
-              oninput((e.target as HTMLTextAreaElement).value, dom.selectionStart);
+      const { initialValue, caretPosition, onchange, className, onblur, oninput, autoResize } = attrs;
+      const { style } = state;
+
+      return m('textarea.markdown-editor-textarea[tabindex=0]', {
+        class: className,
+        style,
+        oncreate: ({ dom }) => {
+          state.dom = dom as HTMLTextAreaElement;
+          state.dom.selectionStart = caretPosition;
+          autoResizeTextArea(autoResize);
+        },
+        onblur,
+        // onupdate: () => {
+        //   console.log('updating');
+        //   const { dom, selection: { selectionStart, selectionEnd} } = state;
+        //   if (selectionStart && selectionEnd) {
+        //     console.log(`setting selection from ${selectionStart} - ${selectionEnd}`);
+        //     dom.focus();
+        //     dom.setSelectionRange(selectionStart, selectionEnd);
+        //   }
+        // },
+        onmouseup: selectionHandler,
+        onkeydown: selectionHandler,
+        onkeyup: selectionHandler,
+        oninput: (e: Event) => {
+          (e as any).redraw = false;
+          const { dom } = state;
+          autoResizeTextArea(autoResize);
+          if (oninput) {
+            oninput((e.target as HTMLTextAreaElement).value, dom.selectionStart);
+          }
+        },
+        onchange: onchange
+          ? (e: Event) => {
+              (e as any).redraw = false;
+              // Only fired when the element looses focus
+              onchange((e.target as HTMLTextAreaElement).value);
             }
-          },
-          onchange: onchange
-            ? (e: Event) => {
-                (e as any).redraw = false;
-                // Only fired when the element looses focus
-                onchange((e.target as HTMLTextAreaElement).value);
-              }
-            : undefined,
-          value: initialValue,
-        }),
-      ]);
+          : undefined,
+        value: initialValue,
+      });
     },
   };
 };
