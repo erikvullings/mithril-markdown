@@ -33,7 +33,6 @@ export const getActiveLine = (doc: string, { selectionStart = 0 }: ISelection) =
     selectionStart: startPos,
     selectionEnd: startPos + text.length,
   } as ISelection;
-  console.table(selection);
   return selection;
 };
 
@@ -56,7 +55,6 @@ export const getWords = (doc: string, selection: ISelection) => {
     selectionStart: selectionStart + spacePreceding + 1,
     selectionEnd: selectionStart + spaceFollowing,
   } as ISelection;
-  console.table(finalSelection);
   return finalSelection;
 };
 
@@ -88,7 +86,6 @@ export const getActiveLines = (doc: string, { selectionStart = 0, selectionEnd =
     selectionStart: startPos,
     selectionEnd: endPos,
   } as ISelection;
-  console.table(selection);
   return selection;
 };
 
@@ -105,7 +102,6 @@ export const toggle = (doc: string, cmd: ICommandConfig, selection?: ISelection)
     const updater = (t: string, i = 0) =>
       detect.test(t) ? t.replace(off[0], off[1]) : t.replace(on[0], on[1].replace(/1\. /, `${i + 1}. `));
     const updated = merge ? updater(text.join('\n')) : text.map(updater).join('\n') + '\n';
-    console.log(doc.substring(selectionStart, selectionEnd));
     return replaceBetween(doc, updated, selectionStart, selectionEnd);
   } else {
     const updated = detect.test(text) ? text.replace(off[0], off[1]) : text.replace(on[0], on[1]);

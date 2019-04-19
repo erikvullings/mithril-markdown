@@ -29,7 +29,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     markdown: '',
     html: '',
     isEditing: false,
-    shortcutKeys: {},
+    shortcuts: {},
   } as {
     onchange?: (markdown: string, html: string) => void;
     markdown: string;
@@ -40,7 +40,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     undo: IUndoRedo<{ markdown: string; caretPosition: number }>;
     undoDom: HTMLAnchorElement;
     redoDom: HTMLAnchorElement;
-    shortcutKeys: { [key: string]: () => void };
+    shortcuts: { [key: string]: () => void };
   };
 
   const runCmd = (cmd: ICommandConfig) => {
@@ -52,9 +52,12 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
 
   const stopEditingCmd = () => (state.isEditing = false);
 
-  const emitChange = () => {
-    const { markdown, onchange } = state;
+  const emitChange = (saveState = true) => {
+    const { markdown, caretPosition, onchange } = state;
     state.html = myMarked(markdown);
+    if (saveState) {
+      saveUndoState(markdown, caretPosition);
+    }
     if (onchange) {
       onchange(markdown, state.html);
     }
@@ -74,12 +77,14 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     }
   };
 
-  const oninputHandler = debounce((markdown: string, caretPosition: number) => {
+  const saveUndoState = (markdown: string, caretPosition: number) => {
     const { undo } = state;
     state.markdown = markdown;
     state.caretPosition = caretPosition;
     undo.add({ markdown, caretPosition });
-  }, 500);
+  };
+
+  const oninput = debounce(saveUndoState, 500);
 
   const undoRedoCmd = (isUndo: boolean) => {
     const { undo } = state;
@@ -90,8 +95,23 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     const { markdown, caretPosition } = isUndo ? undo.undo() : undo.redo();
     state.markdown = markdown;
     state.caretPosition = caretPosition;
-    emitChange();
+    emitChange(false);
     m.redraw();
+  };
+
+  /** Handle onkeydown to see if we need to call a command */
+  const invokeCmdShortcut = (e: KeyboardEvent) => {
+    if (!e.ctrlKey) {
+      return;
+    }
+    const key = `CTRL+${e.key ? e.key.toUpperCase() : ''}`;
+    const { shortcuts } = state;
+    if (shortcuts.hasOwnProperty(key)) {
+      shortcuts[key]();
+      e.preventDefault();
+      e.stopPropagation();
+      m.redraw();
+    }
   };
 
   const enabledStyle = 'margin: 0 10px 0 0; cursor: pointer;';
@@ -128,6 +148,18 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
         undoLimit,
         s => setLinkStyle(state.undoDom, s),
         s => setLinkStyle(state.redoDom, s)
+      );
+      state.shortcuts = [
+        ...commands.filter(cmd => cmd.shortcut).map(cmd => ({ key: cmd.shortcut, cmd: () => runCmd(cmd) })),
+        { key: 'CTRL+Z', cmd: () => undoRedoCmd(true) },
+        { key: 'CTRL+Y', cmd: () => undoRedoCmd(false) },
+        { key: 'CTRL+S', cmd: () => stopEditingCmd() },
+      ].reduce(
+        (acc, cur) => {
+          acc[cur.key] = cur.cmd;
+          return acc;
+        },
+        {} as { [key: string]: () => void }
       );
     },
     view: ({ attrs: { markdown, caretPosition, autoResize = true, ...props } }) => {
@@ -168,6 +200,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
                 caretPosition,
                 initialValue: markdown,
                 autoResize,
+                onkeydown: invokeCmdShortcut,
                 onselection: (selection: ISelection) => {
                   state.selection = selection;
                 },
@@ -175,7 +208,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
                   state.markdown = md;
                   emitChange();
                 },
-                oninput: oninputHandler,
+                oninput,
               }),
             ]
           )

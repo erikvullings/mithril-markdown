@@ -29,6 +29,7 @@ export const TextArea: FactoryComponent<ITextArea> = () => {
     height: number;
     shifted: boolean;
     onselection?: (selection: ISelection) => void;
+    onkeydown?: (e: KeyboardEvent) => void;
     style: string;
   };
 
@@ -50,6 +51,9 @@ export const TextArea: FactoryComponent<ITextArea> = () => {
     (e as any).redraw = false;
     if (e.type === 'keydown') {
       state.shifted = e.shiftKey;
+      if (state.onkeydown) {
+        state.onkeydown(e as KeyboardEvent);
+      }
       return;
     }
     const { shifted, onselection, dom } = state;
@@ -70,8 +74,9 @@ export const TextArea: FactoryComponent<ITextArea> = () => {
   };
 
   return {
-    oninit: ({ attrs: { onselection, style, autoResize } }) => {
+    oninit: ({ attrs: { onselection, style, autoResize, onkeydown } }) => {
       state.onselection = onselection;
+      state.onkeydown = onkeydown;
       state.style = `${autoResize ? 'box-sizing: border-box; overflow-x: hidden; resize: none;' : ''}${
         style ? style : ''
       }${autoResize && style && /max-height/.test(style) ? '' : 'overflow-y: hidden'}`;
@@ -89,15 +94,13 @@ export const TextArea: FactoryComponent<ITextArea> = () => {
           autoResizeTextArea(autoResize);
         },
         onblur,
-        // onupdate: () => {
-        //   console.log('updating');
-        //   const { dom, selection: { selectionStart, selectionEnd} } = state;
-        //   if (selectionStart && selectionEnd) {
-        //     console.log(`setting selection from ${selectionStart} - ${selectionEnd}`);
-        //     dom.focus();
-        //     dom.setSelectionRange(selectionStart, selectionEnd);
-        //   }
-        // },
+        onupdate: () => {
+          const { dom, selection: { selectionStart, selectionEnd} } = state;
+          if (selectionStart && selectionEnd) {
+            dom.focus();
+            dom.setSelectionRange(selectionStart, selectionEnd);
+          }
+        },
         onmouseup: selectionHandler,
         onkeydown: selectionHandler,
         onkeyup: selectionHandler,

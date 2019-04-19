@@ -10,6 +10,8 @@ export interface ICommandConfig {
   name: string;
   /** SVG icon representing the command */
   icon: string;
+  /** Shortcut key, e.g. CTRL+B for bold. Has to start with CTRL+, uppercase */
+  shortcut: string;
   /** Detection function, to detect if the command has already been applied */
   detect: RegExp;
   /** If true, works on whole lines, otherwise command is word based */
@@ -24,6 +26,7 @@ export interface ICommandConfig {
 
 const boldCommandConfig = {
   name: 'Bold',
+  shortcut: 'CTRL+B',
   detect: /\*\*(\S.*?\S)\*\*/i,
   multiline: false,
   on: [/(.+)/gi, '**$1**'],
@@ -32,6 +35,7 @@ const boldCommandConfig = {
 
 const italicsCommandConfig = {
   name: 'Italics',
+  shortcut: 'CTRL+I',
   detect: /\*(\S.*?\S)\*(?!=\*)/i,
   multiline: false,
   on: [/(.+)/gi, '*$1*'],
@@ -89,6 +93,7 @@ const codeInlineCommandConfig = {
 
 const unorderedListCommandConfig = {
   name: 'Unordered list',
+  shortcut: 'CTRL+U',
   detect: /(^|\n)-\s+(.+)\s*(?=$|\n)/i,
   multiline: true,
   on: [/(^|\n)\s*(.+?)\s*(?=$|\n)/gi, '$1- $2'],
@@ -97,6 +102,7 @@ const unorderedListCommandConfig = {
 
 const orderedListCommandConfig = {
   name: 'Ordered list',
+  shortcut: 'CTRL+O',
   detect: /(^|\n)(?:\d+\.)\s+(.+)\s*(?=$|\n)/i,
   multiline: true,
   on: [/(^|\n)\s*(.+?)\s*(?=$|\n)/gi, '$11. $2'],
@@ -105,6 +111,7 @@ const orderedListCommandConfig = {
 
 const blockQuoteCommandConfig = {
   name: 'Block quote',
+  shortcut: 'CTRL+Q',
   detect: /(^|\n)>[^\S\n]*(.*?)[^\S\n]*(?=$|\n)/i,
   multiline: true,
   on: [/(^|\n)[^\S\n]*(.*?)[^\S\n]*(?=$|\n)/gi, '$1> $2'],
