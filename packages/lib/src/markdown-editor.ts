@@ -4,6 +4,7 @@ import { TextArea } from './text-area';
 import { toggle, ISelection, isLinkClicked, debounce } from './helpers';
 import { ICommandConfig, commands } from './commands';
 import { IUndoRedo, undoRedo } from './undo-redo';
+import { undoIcon, redoIcon, stopIcon } from './assets';
 
 export interface IMarkdownEditor extends Attributes {
   /** Markdown to render */
@@ -114,7 +115,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     }
   };
 
-  const enabledStyle = 'margin: 0 10px 0 0; cursor: pointer;';
+  const enabledStyle = 'margin: 0 2px 0 0;';
   const disabledStyle =
     'margin: 0 10px 0 0; cursor: not-allowed; color: currentColor; opacity: 0.5; text-decoration: none';
 
@@ -175,26 +176,36 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
               },
             },
             [
-              ...commands.map(cmd => m('a', { style: enabledStyle, onclick: () => runCmd(cmd) }, cmd.name)),
-              m(
-                'a',
-                {
-                  style: undo.canUndo() ? enabledStyle : disabledStyle,
-                  onclick: () => undoRedoCmd(true),
-                  oncreate: ({ dom }) => (state.undoDom = dom as HTMLAnchorElement),
-                },
-                ' UNDO '
+              ...commands.map(cmd =>
+                m(
+                  'button',
+                  { style: enabledStyle, onclick: () => runCmd(cmd) },
+                  cmd.icon ? m('img', { width: '25', height: '25', src: cmd.icon, alt: cmd.name }) : cmd.name
+                )
               ),
               m(
-                'a',
+                'button',
                 {
                   style: undo.canRedo() ? enabledStyle : disabledStyle,
                   onclick: () => undoRedoCmd(false),
                   oncreate: ({ dom }) => (state.redoDom = dom as HTMLAnchorElement),
                 },
-                ' REDO '
+                m('img', { width: '25', height: '25', src: redoIcon, alt: 'REDO' })
               ),
-              m('a', { style: enabledStyle, onclick: stopEditingCmd }, ' STOP '),
+              m(
+                'button',
+                {
+                  style: undo.canUndo() ? enabledStyle : disabledStyle,
+                  onclick: () => undoRedoCmd(true),
+                  oncreate: ({ dom }) => (state.undoDom = dom as HTMLAnchorElement),
+                },
+                m('img', { width: '25', height: '25', src: undoIcon, alt: 'UNDO' })
+              ),
+              m(
+                'button',
+                { style: enabledStyle, onclick: stopEditingCmd },
+                m('img', { width: '25', height: '25', src: stopIcon, alt: 'STOP' })
+              ),
               m(TextArea, {
                 ...props,
                 caretPosition,

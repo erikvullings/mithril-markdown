@@ -1,10 +1,11 @@
+import { boldIcon, italicsIcon, strikethroughIcon, codeIcon, unorderedIcon, orderedIcon, quoteIcon } from './assets';
+
 /**
  * Commands for processing the markdown files using RegExp.
  *
  * Source of the commands:
  * @see https://github.com/qjebbs/vscode-markdown-extended/blob/master/src/commands/toggleFormats.ts
  */
-
 export interface ICommandConfig {
   /** Name of the command */
   name: string;
@@ -27,6 +28,7 @@ export interface ICommandConfig {
 const boldCommandConfig = {
   name: 'Bold',
   shortcut: 'CTRL+B',
+  icon: boldIcon,
   detect: /\*\*(\S.*?\S)\*\*/i,
   multiline: false,
   on: [/(.+)/gi, '**$1**'],
@@ -36,6 +38,7 @@ const boldCommandConfig = {
 const italicsCommandConfig = {
   name: 'Italics',
   shortcut: 'CTRL+I',
+  icon: italicsIcon,
   detect: /\*(\S.*?\S)\*(?!=\*)/i,
   multiline: false,
   on: [/(.+)/gi, '*$1*'],
@@ -76,6 +79,7 @@ const italicsCommandConfig = {
 
 const strikethroughCommandConfig = {
   name: 'Strikethrough',
+  icon: strikethroughIcon,
   detect: /~~(\S.*?\S)~~/i,
   multiline: false,
   on: [/(.+)/gi, '~~$1~~'],
@@ -84,6 +88,7 @@ const strikethroughCommandConfig = {
 
 const codeInlineCommandConfig = {
   name: 'Code inline',
+  icon: codeIcon,
   detect: /^```\r?\n[\S\s]+\r?\n```\s*$/i,
   multiline: true,
   merge: true,
@@ -93,6 +98,7 @@ const codeInlineCommandConfig = {
 
 const unorderedListCommandConfig = {
   name: 'Unordered list',
+  icon: unorderedIcon,
   shortcut: 'CTRL+U',
   detect: /(^|\n)-\s+(.+)\s*(?=$|\n)/i,
   multiline: true,
@@ -102,6 +108,7 @@ const unorderedListCommandConfig = {
 
 const orderedListCommandConfig = {
   name: 'Ordered list',
+  icon: orderedIcon,
   shortcut: 'CTRL+O',
   detect: /(^|\n)(?:\d+\.)\s+(.+)\s*(?=$|\n)/i,
   multiline: true,
@@ -111,6 +118,7 @@ const orderedListCommandConfig = {
 
 const blockQuoteCommandConfig = {
   name: 'Block quote',
+  icon: quoteIcon,
   shortcut: 'CTRL+Q',
   detect: /(^|\n)>[^\S\n]*(.*?)[^\S\n]*(?=$|\n)/i,
   multiline: true,
