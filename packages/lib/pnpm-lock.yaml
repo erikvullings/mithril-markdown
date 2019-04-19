@@ -5,7 +5,7 @@ devDependencies:
   '@types/mithril': 1.1.16
   cssnano: 4.1.10
   typedoc: 0.14.2
-  typescript: 3.4.3
+  typescript: 3.4.4
 lockfileVersion: 5
 packages:
   /@types/events/3.0.0:
@@ -1272,13 +1272,13 @@ packages:
     hasBin: true
     resolution:
       integrity: sha512-0RNDbSdEokBeEAkgNbxJ+BLwSManFy9TeXz8uW+48j/xhEXv1ePME60olyzw2XzUqUBNAYFeJadIqAgNqIACwg==
-  /typescript/3.4.3:
+  /typescript/3.4.4:
     dev: true
     engines:
       node: '>=4.2.0'
     hasBin: true
     resolution:
-      integrity: sha512-FFgHdPt4T/duxx6Ndf7hwgMZZjZpB+U0nMNGVCYPq0rEzWKjEDobm4J6yb3CS7naZ0yURFqdw9Gwc7UOh/P9oQ==
+      integrity: sha512-xt5RsIRCEaf6+j9AyOBgvVuAec0i92rgCaS3S+UVf5Z/vF2Hvtsw08wtUTJqp4djwznoAgjSxeCcU4r+CcDBJA==
   /uglify-js/3.5.4:
     dependencies:
       commander: 2.20.0
@@ -1335,4 +1335,4 @@ specifiers:
   cssnano: ^4.1.10
   marked: ^0.6.2
   typedoc: ^0.14.2
-  typescript: ^3.4.3
+  typescript: ^3.4.4

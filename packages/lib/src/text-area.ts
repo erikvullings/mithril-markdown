@@ -1,14 +1,23 @@
 import m, { FactoryComponent, Attributes } from 'mithril';
 import { ISelection } from '.';
 
-declare var M: any;
+// declare var M: any;
 
 export interface ITextArea extends Attributes {
+  /** Initially displayed value */
   initialValue: string;
+  /** Caret position (selectionStart) */
+  caretPosition: number;
+  /** If true, cannot be edited */
   disabled?: boolean;
-  onchange?: (txt: string) => void;
+  /** Fired when the document is changed, after loosing focus */
+  onchange?: (markdown: string) => void;
+  /** Fired when the document is changed, after every input */
+  oninput?: (markdown: string, caretPosition: number) => void;
   /** Fired when a text is selected */
   onselection?: (selection: ISelection) => void;
+  /** If true, auto resize the height of the textarea */
+  autoResize?: boolean;
 }
 
 /** Create a TextArea */
@@ -19,8 +28,20 @@ export const TextArea: FactoryComponent<ITextArea> = () => {
   } as {
     dom: HTMLTextAreaElement;
     selection: ISelection;
+    height: number;
     shifted: boolean;
     onselection?: (selection: ISelection) => void;
+  };
+
+  const autoResizeTextArea = (autoResize?: boolean) => {
+    if (autoResize) {
+      const { dom, height } = state;
+      const scrollHeight = dom.scrollHeight;
+      if (scrollHeight === height) {
+        return;
+      }
+      dom.style.height = `${scrollHeight}px`;
+    }
   };
 
   const selectionHandler = (e: MouseEvent | KeyboardEvent) => {
@@ -53,14 +74,17 @@ export const TextArea: FactoryComponent<ITextArea> = () => {
       state.onselection = onselection;
     },
     view: ({ attrs }) => {
-      const { initialValue, onchange, className, style, onblur, oninput } = attrs;
+      const { initialValue, caretPosition, onchange, className, style, onblur, oninput, autoResize } = attrs;
       return m(`.input-field`, { className, style }, [
         m('textarea.materialize-textarea[tabindex=0]', {
+          style: autoResizeTextArea ? 'box-sizing: border-box; overflow: hidden; resize: none;' : undefined,
           oncreate: ({ dom }) => {
             state.dom = dom as HTMLTextAreaElement;
-            if (M) {
-              M.textareaAutoResize(dom);
-            }
+            state.dom.selectionStart = caretPosition;
+            autoResizeTextArea(autoResize);
+            // if (M) {
+            //   M.textareaAutoResize(dom);
+            // }
           },
           onblur,
           // onupdate: () => {
@@ -75,12 +99,14 @@ export const TextArea: FactoryComponent<ITextArea> = () => {
           onmouseup: selectionHandler,
           onkeydown: selectionHandler,
           onkeyup: selectionHandler,
-          oninput: oninput
-            ? (e: Event) => {
-                (e as any).redraw = false;
-                oninput((e.target as HTMLTextAreaElement).value);
-              }
-            : undefined,
+          oninput: (e: Event) => {
+            (e as any).redraw = false;
+            const { dom } = state;
+            autoResizeTextArea(autoResize);
+            if (oninput) {
+              oninput((e.target as HTMLTextAreaElement).value, dom.selectionStart);
+            }
+          },
           onchange: onchange
             ? (e: Event) => {
                 (e as any).redraw = false;

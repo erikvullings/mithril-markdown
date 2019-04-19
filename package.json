@@ -27,6 +27,6 @@
   },
   "homepage": "https://github.com/erikvullings/mithril-markdown#readme",
   "devDependencies": {
-    "lerna": "^3.4.3"
+    "lerna": "^3.13.3"
   }
 }

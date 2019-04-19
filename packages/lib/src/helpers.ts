@@ -102,9 +102,8 @@ export const toggle = (doc: string, cmd: ICommandConfig, selection?: ISelection)
     return doc;
   }
   if (text instanceof Array) {
-    const updater = (t: string, i = 0) => detect.test(t)
-      ? t.replace(off[0], off[1])
-      : t.replace(on[0], on[1].replace(/1\. /, `${i + 1}. `));
+    const updater = (t: string, i = 0) =>
+      detect.test(t) ? t.replace(off[0], off[1]) : t.replace(on[0], on[1].replace(/1\. /, `${i + 1}. `));
     const updated = merge ? updater(text.join('\n')) : text.map(updater).join('\n') + '\n';
     console.log(doc.substring(selectionStart, selectionEnd));
     return replaceBetween(doc, updated, selectionStart, selectionEnd);
@@ -118,4 +117,12 @@ export const toggle = (doc: string, cmd: ICommandConfig, selection?: ISelection)
 export const isLinkClicked = (e: Event) => {
   const target = (e.target || {}) as HTMLElement;
   return target.tagName && target.tagName.toLowerCase() === 'a' ? true : false;
+};
+
+export const debounce = <F extends (...params: any[]) => void>(fn: F, delay = 100) => {
+  let timeoutID: number;
+  return function(this: any, ...args: any[]) {
+    clearTimeout(timeoutID);
+    timeoutID = window.setTimeout(() => fn.apply(this, args), delay);
+  } as F;
 };
