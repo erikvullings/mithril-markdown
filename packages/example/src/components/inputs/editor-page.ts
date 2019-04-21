@@ -1,6 +1,7 @@
 import { CodeBlock } from 'mithril-materialized';
 import { MarkdownEditor } from 'mithril-markdown';
 import m from 'mithril';
+import '../../../node_modules/mithril-markdown/dist/index.css';
 
 export const EditorPage = () => {
   const state = {
@@ -28,7 +29,8 @@ Multiline actions should be performed on each line.
         m('h2.header', 'MarkdownEditor'),
 
         m(MarkdownEditor, {
-          // style: 'height: 300px',
+          // style: 'height: 200px; max-height: 200px',
+          // autoResize: false,
           markdown: state.markdown,
           onchange: (markdown) => {
             state.markdown = markdown;

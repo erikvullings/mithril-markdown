@@ -77,7 +77,7 @@ export const TextArea: FactoryComponent<ITextArea> = () => {
     oninit: ({ attrs: { onselection, style, autoResize, onkeydown } }) => {
       state.onselection = onselection;
       state.onkeydown = onkeydown;
-      state.style = `${autoResize ? 'box-sizing: border-box; overflow-x: hidden; resize: none;' : ''}${
+      state.style = `${autoResize ? 'padding: 10px; box-sizing: border-box; overflow-x: hidden; resize: none;' : ''}${
         style ? style : ''
       }${autoResize && style && /max-height/.test(style) ? '' : 'overflow-y: hidden'}`;
     },
