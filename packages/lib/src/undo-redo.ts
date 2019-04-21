@@ -73,6 +73,7 @@ export const undoRedo = <T>(
   };
 
   const signalChanges = () => {
+    console.table(buffer[index]);
     if (canUndoChanged && couldUndo !== canUndo()) {
       couldUndo = canUndo();
       canUndoChanged(couldUndo);

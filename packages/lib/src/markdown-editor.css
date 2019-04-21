@@ -14,8 +14,7 @@
 }
 .markdown-editor-button {
   display: inline-block;
-  padding: 0.2em 1.45em;
-  margin: 0.1em;
+  padding: 0.3em;
   border: 0.15em solid #cccccc;
   box-sizing: border-box;
   text-decoration: none;
@@ -27,14 +26,21 @@
   position: relative;
 }
 .markdown-editor-button:hover {
-  border-color: #7a7a7a;
+  border-color: darkgray;
+  background: darkgray;
+  color: white;
 }
 .markdown-editor-button:active {
   background-color: #999999;
 }
+.markdown-editor-button.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  text-decoration: none;
+}
 /* @media all (max-width:30em) {
- .markdown-editor-button {
-  display:block;
-  margin: 0.2em auto;
- }
+.markdown-editor-button {
+display:block;
+margin: 0.2em auto;
+}
 } */

@@ -116,10 +116,6 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     }
   };
 
-  const enabledStyle = 'margin: 0 2px 0 0;';
-  const disabledStyle =
-    'margin: 0 10px 0 0; cursor: not-allowed; color: currentColor; opacity: 0.5; text-decoration: none';
-
   return {
     oninit: ({ attrs: { markdown, caretPosition, onchange, options, undoLimit = 10 } }) => {
       // Set options
@@ -181,14 +177,14 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
                 ...commands.map(cmd =>
                   m(
                     'button.markdown-editor-button',
-                    { style: enabledStyle, onclick: () => runCmd(cmd) },
+                    { onclick: () => runCmd(cmd) },
                     cmd.icon ? m('img', { width: '25', height: '25', src: cmd.icon, alt: cmd.name }) : cmd.name
                   )
                 ),
                 m(
                   'button.markdown-editor-button',
                   {
-                    style: undo.canRedo() ? enabledStyle : disabledStyle,
+                    className: undo.canRedo() ? undefined : 'disabled',
                     onclick: () => undoRedoCmd(false),
                     oncreate: ({ dom }) => (state.redoDom = dom as HTMLAnchorElement),
                   },
@@ -197,15 +193,15 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
                 m(
                   'button.markdown-editor-button',
                   {
-                    style: undo.canUndo() ? enabledStyle : disabledStyle,
+                    className: undo.canRedo() ? undefined : 'disabled',
                     onclick: () => undoRedoCmd(true),
                     oncreate: ({ dom }) => (state.undoDom = dom as HTMLAnchorElement),
                   },
                   m('img', { width: '25', height: '25', src: undoIcon, alt: 'UNDO' })
                 ),
                 m(
-                  'button.markdown-editor-button',
-                  { style: enabledStyle, onclick: stopEditingCmd },
+                  'button.markdown-editor-button.right',
+                  { onclick: stopEditingCmd },
                   m('img', { width: '25', height: '25', src: stopIcon, alt: 'STOP' })
                 ),
               ]),

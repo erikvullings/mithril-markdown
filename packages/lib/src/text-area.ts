@@ -108,6 +108,7 @@ export const TextArea: FactoryComponent<ITextArea> = () => {
           (e as any).redraw = false;
           const { dom } = state;
           autoResizeTextArea(autoResize);
+          console.log(`Cursor: ${dom.selectionStart}`);
           if (oninput) {
             oninput((e.target as HTMLTextAreaElement).value, dom.selectionStart);
           }

@@ -11,7 +11,7 @@ export const HomePage = () => ({
           m('h2', 'About mithril-markdown'),
           m('p', [
             `A component for Mithril to edit content. See the `,
-            m('a[href=/content-editable]', { oncreate: m.route.link }, 'example.'),
+            m('a[href=/markdown-editor]', { oncreate: m.route.link }, 'example.'),
           ]),
           m('p', [
             'You can check out the API documentation ',

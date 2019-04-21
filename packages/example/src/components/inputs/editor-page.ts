@@ -1,7 +1,7 @@
 import { CodeBlock } from 'mithril-materialized';
 import { MarkdownEditor } from 'mithril-markdown';
 import m from 'mithril';
-import '../../../node_modules/mithril-markdown/dist/index.css';
+import '/node_modules/mithril-markdown/dist/index.css';
 
 export const EditorPage = () => {
   const state = {
