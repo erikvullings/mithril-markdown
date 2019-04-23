@@ -2,20 +2,20 @@ import m, { FactoryComponent, Attributes } from 'mithril';
 import { ISelection } from '.';
 
 export interface ITextArea extends Attributes {
-  /** Initially displayed value */
-  initialValue: string;
-  /** Caret position (selectionStart) */
-  caretPosition: number;
+  /** Displayed value */
+  markdown: string;
   /** If true, cannot be edited */
   disabled?: boolean;
+  /** If true, auto resize the height of the textarea */
+  autoResize?: boolean;
+  /** Set the selection start and end */
+  selection: ISelection;
   /** Fired when the document is changed, after loosing focus */
   onchange?: (markdown: string) => void;
   /** Fired when the document is changed, after every input */
-  oninput?: (markdown: string, caretPosition: number) => void;
+  oninput?: (markdown: string, selection: ISelection) => void;
   /** Fired when a text is selected */
   onselection?: (selection: ISelection) => void;
-  /** If true, auto resize the height of the textarea */
-  autoResize?: boolean;
 }
 
 /** Create a TextArea */
@@ -81,8 +81,31 @@ export const TextArea: FactoryComponent<ITextArea> = () => {
         style ? style : ''
       }${autoResize && style && /max-height/.test(style) ? '' : 'overflow-y: hidden'}`;
     },
-    view: ({ attrs }) => {
-      const { initialValue, caretPosition, onchange, className, onblur, oninput, autoResize } = attrs;
+    onupdate: ({
+      attrs: {
+        selection: { selectionStart: start, selectionEnd },
+      },
+    }) => {
+      const { dom } = state;
+      // const { dom, selection: { selectionStart, selectionEnd} } = state;
+      // console.log('updating');
+      // console.log(start);
+      if (typeof start !== undefined) {
+        dom.focus();
+        dom.setSelectionRange(start, selectionEnd || start);
+      }
+    },
+    view: ({
+      attrs: {
+        markdown,
+        onchange,
+        className,
+        onblur,
+        oninput,
+        autoResize,
+        selection: { selectionStart },
+      },
+    }) => {
       const { style } = state;
 
       return m('textarea.markdown-editor-textarea[tabindex=0]', {
@@ -90,17 +113,10 @@ export const TextArea: FactoryComponent<ITextArea> = () => {
         style,
         oncreate: ({ dom }) => {
           state.dom = dom as HTMLTextAreaElement;
-          state.dom.selectionStart = caretPosition;
+          state.dom.selectionStart = selectionStart;
           autoResizeTextArea(autoResize);
         },
         onblur,
-        onupdate: () => {
-          const { dom, selection: { selectionStart, selectionEnd} } = state;
-          if (selectionStart && selectionEnd) {
-            dom.focus();
-            dom.setSelectionRange(selectionStart, selectionEnd);
-          }
-        },
         onmouseup: selectionHandler,
         onkeydown: selectionHandler,
         onkeyup: selectionHandler,
@@ -108,9 +124,13 @@ export const TextArea: FactoryComponent<ITextArea> = () => {
           (e as any).redraw = false;
           const { dom } = state;
           autoResizeTextArea(autoResize);
-          console.log(`Cursor: ${dom.selectionStart}`);
           if (oninput) {
-            oninput((e.target as HTMLTextAreaElement).value, dom.selectionStart);
+            const { selectionStart: ss, selectionEnd } = dom;
+            oninput((e.target as HTMLTextAreaElement).value, {
+              selectionStart: ss,
+              selectionEnd,
+              text: dom.value.substring(ss, selectionEnd),
+            });
           }
         },
         onchange: onchange
@@ -120,7 +140,7 @@ export const TextArea: FactoryComponent<ITextArea> = () => {
               onchange((e.target as HTMLTextAreaElement).value);
             }
           : undefined,
-        value: initialValue,
+        value: markdown,
       });
     },
   };
