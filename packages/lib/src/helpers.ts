@@ -89,7 +89,8 @@ export const getActiveLines = (doc: string, { selectionStart = 0, selectionEnd =
   return selection;
 };
 
-export const toggle = (doc: string, cmd: ICommandConfig, selection?: ISelection) => {
+/** Execute the command on the text */
+export const executeCmd = (doc: string, cmd: ICommandConfig, selection?: ISelection) => {
   if (!selection) {
     return doc;
   }
