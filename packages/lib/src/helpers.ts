@@ -52,8 +52,8 @@ export const getWords = (doc: string, selection: ISelection) => {
   }
   const finalSelection = {
     text: text.substring(spacePreceding + 1, spaceFollowing),
-    selectionStart: selectionStart + spacePreceding + 1,
-    selectionEnd: selectionStart + spaceFollowing,
+    selectionStart: selectionStart + spacePreceding + 1 || selection.selectionStart,
+    selectionEnd: selectionStart + spaceFollowing || selection.selectionEnd,
   } as ISelection;
   return finalSelection;
 };
@@ -95,10 +95,9 @@ export const executeCmd = (doc: string, cmd: ICommandConfig, selection?: ISelect
     return doc;
   }
   const { detect, on, off, multiline, merge } = cmd;
-  const { text, selectionStart, selectionEnd } = multiline ? getActiveLines(doc, selection) : getWords(doc, selection);
-  if (!text) {
-    return doc;
-  }
+  const { text = ' ', selectionStart = selection.selectionStart, selectionEnd = selection.selectionEnd } = multiline
+    ? getActiveLines(doc, selection)
+    : getWords(doc, selection);
   if (text instanceof Array) {
     const updater = (t: string, i = 0) =>
       detect.test(t) ? t.replace(off[0], off[1]) : t.replace(on[0], on[1].replace(/1\. /, `${i + 1}. `));
