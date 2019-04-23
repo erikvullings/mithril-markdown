@@ -1,7 +1,7 @@
 import m, { FactoryComponent, Attributes } from 'mithril';
 import myMarked, { MarkedOptions } from 'marked';
 import { TextArea } from './text-area';
-import { toggle, ISelection, isLinkClicked, debounce } from './helpers';
+import { executeCmd, ISelection, isLinkClicked, debounce } from './helpers';
 import { ICommandConfig, commands } from './commands';
 import { IUndoRedo, undoRedo } from './undo-redo';
 import { undoIcon, redoIcon, stopIcon } from './assets';
@@ -32,14 +32,14 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     html: '',
     isEditing: false,
     shortcuts: {},
+    selection: { selectionStart: 0 },
   } as {
     onchange?: (markdown: string, html: string) => void;
     markdown: string;
-    caretPosition: number;
     html: string;
     isEditing: boolean;
-    selection?: ISelection;
-    undo: IUndoRedo<{ markdown: string; caretPosition: number }>;
+    selection: ISelection;
+    undo: IUndoRedo<{ markdown: string; selection: ISelection }>;
     undoDom: HTMLAnchorElement;
     redoDom: HTMLAnchorElement;
     shortcuts: { [key: string]: () => void };
@@ -48,17 +48,17 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
   const runCmd = (cmd: ICommandConfig) => {
     const { selection, markdown } = state;
     state.isEditing = true;
-    state.markdown = toggle(markdown, cmd, selection);
+    state.markdown = executeCmd(markdown, cmd, selection);
     emitChange();
   };
 
   const stopEditingCmd = () => (state.isEditing = false);
 
   const emitChange = (saveState = true) => {
-    const { markdown, caretPosition, onchange } = state;
+    const { markdown, selection, onchange } = state;
     state.html = myMarked(markdown);
     if (saveState) {
-      saveUndoState(markdown, caretPosition);
+      saveUndoState(markdown, selection);
     }
     if (onchange) {
       onchange(markdown, state.html);
@@ -79,11 +79,11 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     }
   };
 
-  const saveUndoState = (markdown: string, caretPosition: number) => {
+  const saveUndoState = (markdown: string, selection: ISelection) => {
     const { undo } = state;
     state.markdown = markdown;
-    state.caretPosition = caretPosition;
-    undo.add({ markdown, caretPosition });
+    state.selection = selection;
+    undo.add({ markdown, selection });
   };
 
   const oninput = debounce(saveUndoState, 500);
@@ -94,9 +94,9 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     if ((isUndo && !undo.canUndo()) || (!isUndo && !undo.canRedo())) {
       return;
     }
-    const { markdown, caretPosition } = isUndo ? undo.undo() : undo.redo();
+    const { markdown, selection } = isUndo ? undo.undo() : undo.redo();
     state.markdown = markdown;
-    state.caretPosition = caretPosition;
+    state.selection = selection;
     emitChange(false);
     m.redraw();
   };
@@ -112,12 +112,12 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
       shortcuts[key]();
       e.preventDefault();
       e.stopPropagation();
-      m.redraw();
+      (e as any).redraw = true;
     }
   };
 
   return {
-    oninit: ({ attrs: { markdown, caretPosition, onchange, options, undoLimit = 10 } }) => {
+    oninit: ({ attrs: { markdown, onchange, options, undoLimit = 10 } }) => {
       // Set options
       // `highlight` example uses `highlight.js`
       myMarked.setOptions({
@@ -139,10 +139,12 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
         ...options,
       });
 
+      const { selection } = state;
+      state.markdown = markdown;
       state.html = myMarked(markdown);
       state.onchange = onchange;
       state.undo = undoRedo(
-        { markdown, caretPosition },
+        { markdown, selection },
         undoLimit,
         s => setLinkStyle(state.undoDom, s),
         s => setLinkStyle(state.redoDom, s)
@@ -160,9 +162,8 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
         {} as { [key: string]: () => void }
       );
     },
-    view: ({ attrs: { markdown, caretPosition, autoResize = true, ...props } }) => {
-      state.markdown = markdown;
-      const { html, isEditing, undo } = state;
+    view: ({ attrs: { autoResize = true, ...props } }) => {
+      const { html, isEditing, markdown, selection, undo } = state;
 
       return isEditing
         ? m(
@@ -185,7 +186,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
                   'button.markdown-editor-button',
                   {
                     className: undo.canRedo() ? undefined : 'disabled',
-                    onclick: () => undoRedoCmd(false),
+                    onclick: () => undo.canRedo() && undoRedoCmd(false),
                     oncreate: ({ dom }) => (state.redoDom = dom as HTMLAnchorElement),
                   },
                   m('img', { width: '25', height: '25', src: redoIcon, alt: 'REDO' })
@@ -193,8 +194,8 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
                 m(
                   'button.markdown-editor-button',
                   {
-                    className: undo.canRedo() ? undefined : 'disabled',
-                    onclick: () => undoRedoCmd(true),
+                    className: undo.canUndo() ? undefined : 'disabled',
+                    onclick: () => undo.canUndo() && undoRedoCmd(true),
                     oncreate: ({ dom }) => (state.undoDom = dom as HTMLAnchorElement),
                   },
                   m('img', { width: '25', height: '25', src: undoIcon, alt: 'UNDO' })
@@ -207,12 +208,12 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
               ]),
               m(TextArea, {
                 ...props,
-                caretPosition,
-                initialValue: markdown,
+                selection,
+                markdown,
                 autoResize,
                 onkeydown: invokeCmdShortcut,
-                onselection: (selection: ISelection) => {
-                  state.selection = selection;
+                onselection: (s: ISelection) => {
+                  state.selection = s;
                 },
                 onchange: (md: string) => {
                   state.markdown = md;
