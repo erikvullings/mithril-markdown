@@ -42,7 +42,7 @@ const italicsCommandConfig = {
   detect: /\*(\S.*?\S)\*(?!=\*)/i,
   multiline: false,
   on: [/(.+)/gi, '*$1*'],
-  off: [/\*\*(\S.*?\S)\*\*/gi, '$1'],
+  off: [/\*(\S.*?\S)\*/gi, '$1'],
 } as ICommandConfig;
 
 // const underlineCommandConfig = {
