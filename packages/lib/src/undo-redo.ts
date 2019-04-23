@@ -33,10 +33,9 @@ export const undoRedo = <T>(
 
   /** Remove elements above the current position index */
   const truncate = () => {
-    while (buffer.length > limit) {
+    while (buffer.length >= limit) {
       buffer.shift();
     }
-    buffer.length = index + 1;
   };
 
   const add = (item: T) => {
@@ -73,7 +72,6 @@ export const undoRedo = <T>(
   };
 
   const signalChanges = () => {
-    console.table(buffer[index]);
     if (canUndoChanged && couldUndo !== canUndo()) {
       couldUndo = canUndo();
       canUndoChanged(couldUndo);
