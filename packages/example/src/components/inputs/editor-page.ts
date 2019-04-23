@@ -33,7 +33,7 @@ Multiline actions should be performed on each line.
           // autoResize: false,
           markdown: state.markdown,
           onchange: (markdown) => {
-            state.markdown = markdown;
+            // console.log(markdown);
           },
         }),
 
