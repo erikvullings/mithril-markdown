@@ -46,9 +46,12 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
   };
 
   const runCmd = (cmd: ICommandConfig) => {
-    const { selection, markdown } = state;
+    const { selection: initialSelection, markdown: original } = state;
     state.isEditing = true;
-    state.markdown = executeCmd(markdown, cmd, selection);
+    // state.markdown = executeCmd(original, cmd, initialSelection);
+    const { markdown, selection } = executeCmd(original, cmd, initialSelection);
+    state.markdown = markdown;
+    state.selection = selection;
     emitChange();
   };
 

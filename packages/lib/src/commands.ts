@@ -23,6 +23,12 @@ export interface ICommandConfig {
   on: [RegExp, string];
   /** Turn the desired command effect off, based on a RegExp and a replacement string */
   off: [RegExp, string];
+  /**
+   * SelectionStart and SelectionEnd offset, used to extend or shrink the selection range
+   * for on state. The off state is on state * -1.
+   * E.g. [0, 4] means that the selectionStart remains the same, but the selectionEnd is increased by 4.
+   */
+  offsets: [number, number];
 }
 
 const boldCommandConfig = {
@@ -33,6 +39,8 @@ const boldCommandConfig = {
   multiline: false,
   on: [/(.+)/gi, '**$1**'],
   off: [/\*\*(\S.*?\S)\*\*/gi, '$1'],
+  // In on state, the whole word is selected, so the start of the selection points to **, so extend with 4
+  offsets: [0, 4],
 } as ICommandConfig;
 
 const italicsCommandConfig = {
@@ -43,6 +51,7 @@ const italicsCommandConfig = {
   multiline: false,
   on: [/(.+)/gi, '*$1*'],
   off: [/\*(\S.*?\S)\*/gi, '$1'],
+  offsets: [0, 2],
 } as ICommandConfig;
 
 // const underlineCommandConfig = {
@@ -84,6 +93,7 @@ const strikethroughCommandConfig = {
   multiline: false,
   on: [/(.+)/gi, '~~$1~~'],
   off: [/~~(\S.*?\S)~~/gi, '$1'],
+  offsets: [0, 4],
 } as ICommandConfig;
 
 const codeInlineCommandConfig = {
@@ -94,6 +104,7 @@ const codeInlineCommandConfig = {
   merge: true,
   on: [/((?:\S|\s)+)/gi, '```\n$1\n```'],
   off: [/^```\r?\n([\S\s]+)\r?\n```\s*$/gi, '$1'],
+  offsets: [0, 8],
 } as ICommandConfig;
 
 const unorderedListCommandConfig = {
@@ -104,6 +115,7 @@ const unorderedListCommandConfig = {
   multiline: true,
   on: [/(^|\n)\s*(.+?)\s*(?=$|\n)/gi, '$1- $2'],
   off: [/(^|\n)-\s+(.+)\s*(?=$|\n)/gi, '$1$2'],
+  offsets: [0, 2],
 } as ICommandConfig;
 
 const orderedListCommandConfig = {
@@ -114,6 +126,7 @@ const orderedListCommandConfig = {
   multiline: true,
   on: [/(^|\n)\s*(.+?)\s*(?=$|\n)/gi, '$11. $2'],
   off: [/(^|\n)(?:\d+\.)\s+(.+)\s*(?=$|\n)/gi, '$1$2'],
+  offsets: [0, 3],
 } as ICommandConfig;
 
 const blockQuoteCommandConfig = {
@@ -124,6 +137,7 @@ const blockQuoteCommandConfig = {
   multiline: true,
   on: [/(^|\n)[^\S\n]*(.*?)[^\S\n]*(?=$|\n)/gi, '$1> $2'],
   off: [/(^|\n)>[^\S\n]+(.*?)[^\S\n]*(?=$|\n)/gi, '$1$2'],
+  offsets: [0, 2],
 } as ICommandConfig;
 
 export const commands = [
