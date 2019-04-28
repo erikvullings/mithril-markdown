@@ -1,4 +1,15 @@
-import { boldIcon, italicsIcon, strikethroughIcon, codeIcon, unorderedIcon, orderedIcon, quoteIcon } from './assets';
+import {
+  boldIcon,
+  italicsIcon,
+  strikethroughIcon,
+  codeIcon,
+  unorderedIcon,
+  orderedIcon,
+  quoteIcon,
+  inlineCodeIcon,
+  linkIcon,
+  imageIcon,
+} from './assets';
 
 /**
  * Commands for processing the markdown files using RegExp.
@@ -54,6 +65,17 @@ const italicsCommandConfig = {
   offsets: [0, 2],
 } as ICommandConfig;
 
+const inlineCodeCommandConfig = {
+  name: 'Inline code',
+  shortcut: 'CTRL+E',
+  icon: inlineCodeIcon,
+  detect: /`(\S.*?\S)`(?!=`)/i,
+  multiline: false,
+  on: [/(.+)/gi, '`$1`'],
+  off: [/`(\S.*?\S)`/gi, '$1'],
+  offsets: [0, 2],
+} as ICommandConfig;
+
 // const underlineCommandConfig = {
 //   name: 'Underline',
 //   detect: /_(\S.*?\S)_/gi,
@@ -94,6 +116,28 @@ const strikethroughCommandConfig = {
   on: [/(.+)/gi, '~~$1~~'],
   off: [/~~(\S.*?\S)~~/gi, '$1'],
   offsets: [0, 4],
+} as ICommandConfig;
+
+const linkCommandConfig = {
+  name: 'Link',
+  shortcut: 'CTRL+L',
+  icon: linkIcon,
+  detect: /\[(.*?)\]\(.*\)/i,
+  multiline: false,
+  on: [/(.+)/gi, '[$1](http://URL "TITLE")'],
+  off: [/\[(.*?)\]\(.*\)/gi, '$1'],
+  offsets: [0, 22],
+} as ICommandConfig;
+
+const imageCommandConfig = {
+  name: 'Image',
+  shortcut: 'CTRL+P',
+  icon: imageIcon,
+  detect: /!\[(.*?)\]\(.*\)/i,
+  multiline: false,
+  on: [/(.+)/gi, '![$1](http://URL)'],
+  off: [/!\[(.*?)\]\(.*\)/gi, '$1'],
+  offsets: [0, 15],
 } as ICommandConfig;
 
 const codeInlineCommandConfig = {
@@ -143,11 +187,14 @@ const blockQuoteCommandConfig = {
 export const commands = [
   boldCommandConfig,
   italicsCommandConfig,
+  inlineCodeCommandConfig,
+  strikethroughCommandConfig,
+  linkCommandConfig,
+  imageCommandConfig,
   // underlineCommandConfig,
   // markCommandConfig,
   // superscriptCommandConfig,
   // subscriptCommandConfig,
-  strikethroughCommandConfig,
   codeInlineCommandConfig,
   unorderedListCommandConfig,
   orderedListCommandConfig,
