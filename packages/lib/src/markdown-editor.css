@@ -30,6 +30,7 @@
   background: darkgray;
   color: white;
 }
+.markdown-editor-button:focus,
 .markdown-editor-button:active {
   background-color: #999999;
 }
