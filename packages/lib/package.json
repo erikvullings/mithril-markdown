@@ -1,6 +1,6 @@
 {
   "name": "mithril-markdown",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "A markdown component for mithril.",
   "main": "dist/mithril-markdown.umd.js",
   "module": "dist/mithril-markdown.esm.js",
@@ -37,15 +37,16 @@
   "devDependencies": {
     "@types/marked": "^0.6.5",
     "@types/mithril": "^1.1.16",
-    "rollup": "^1.0.0",
-    "rollup-plugin-commonjs": "^9.2.0",
-    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup": "^1.10.1",
+    "rollup-plugin-commonjs": "^9.3.4",
+    "rollup-plugin-node-resolve": "^4.2.3",
     "rollup-plugin-typescript2": "^0.21.0",
     "rollup-plugin-postcss": "^2.0.3",
     "autoprefixer": "^9.5.1",
-    "ts-node": "^7.0.1",
+    "ts-node": "^8.1.0",
     "tslib": "^1.9.3",
-    "typescript": "^3.4.4"
+    "typedoc": "^0.14.2",
+    "typescript": "^3.4.5"
   },
   "peerDependencies": {
     "mithril": "next"
