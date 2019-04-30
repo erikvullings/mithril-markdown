@@ -1,6 +1,6 @@
 # mithril-markdown
 
-Mithril markdown editor component: click on the HTML to open the markdown editor, edit the markdown, and close it again to render the HTML.
+Mithril markdown editor component: click on the HTML to open the markdown editor, edit the markdown, and close it again to render the HTML. Uses [marked](https://www.npmjs.com/package/marked) for markdown processing.
 
 ## Installation
 

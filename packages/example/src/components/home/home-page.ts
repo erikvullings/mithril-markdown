@@ -28,8 +28,7 @@ npm i --save-dev @types/mithril`,
           }),
           m('p', 'Next, you can use them inside your application:'),
           m(CodeBlock, {
-            code: `import { MarkdownEditor } from 'mithril-markdown';
-`,
+            code: `import { MarkdownEditor } from 'mithril-markdown';`,
           }),
         ])
       ),
