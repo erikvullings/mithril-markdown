@@ -308,48 +308,5 @@ label+.switch {
   }
 }
 
-.__markdown-editor-enabled_cb767_98a03 {
-  margin: 0 2px 0 0;
-}
-.__markdown-editor-disabled_cb767_98a03 {
-  margin: 0 10px 0 0;
-  cursor: not-allowed;
-  color: currentColor;
-  opacity: 0.5;
-  text-decoration: none;
-}
-.__markdown-editor-button-group_cb767_98a03 {
-  background: lightgray;
-  width: 100%;
-}
-.__markdown-editor-button_cb767_98a03 {
-  display: inline-block;
-  padding: 0.2em 1.45em;
-  margin: 0.1em;
-  border: 0.15em solid #cccccc;
-  box-sizing: border-box;
-  text-decoration: none;
-  font-family: 'Segoe UI', 'Roboto', sans-serif;
-  font-weight: 400;
-  color: #000000;
-  background-color: #cccccc;
-  text-align: center;
-  position: relative;
-}
-.__markdown-editor-button_cb767_98a03:hover {
-  border-color: #7a7a7a;
-}
-.__markdown-editor-button_cb767_98a03:active {
-  background-color: #999999;
-}
-/* @media all (max-width:30em) {
- .markdown-editor-button {
-  display:block;
-  margin: 0.2em auto;
- }
-} */
-
-
-
 
 /*# sourceMappingURL=/app.5cec07dd.css.map */
