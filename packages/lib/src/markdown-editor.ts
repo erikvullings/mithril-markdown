@@ -4,7 +4,7 @@ import { TextArea } from './text-area';
 import { executeCmd, ISelection, isLinkClicked, debounce } from './helpers';
 import { ICommandConfig, commands } from './commands';
 import { IUndoRedo, undoRedo } from './undo-redo';
-import { undoIcon, redoIcon, stopIcon } from './assets';
+import { undoIcon, redoIcon, stopIcon, visibilityOnIcon, visibilityOffIcon } from './assets';
 import './markdown-editor.css';
 
 export interface IMarkdownEditor extends Attributes {
@@ -63,9 +63,13 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
   const stopEditingCmd = () => (state.isEditing = false);
 
   const updatePreview = () => {
-    const { previewDom, markdown, selection: { selectionStart } } = state;
+    const {
+      previewDom,
+      markdown,
+      selection: { selectionStart },
+    } = state;
     if (previewDom) {
-      const y = selectionStart / markdown.length * previewDom.scrollHeight;
+      const y = (selectionStart / markdown.length) * previewDom.scrollHeight;
       const render = () => m('div', m.trust(myMarked(markdown)));
       m.render(previewDom, render());
       previewDom.scrollTo(0, y);
@@ -136,7 +140,13 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
   };
 
   return {
-    oninit: ({ attrs: { markdown, onchange, options, undoLimit = 10 } }) => {
+    oninit: ({ attrs: { markdown, onchange, options, undoLimit = 10, preview } }) => {
+      if (preview) {
+        state.showPreview = true;
+        if (typeof preview === 'number') {
+          state.showPreviewHeight = preview;
+        }
+      }
       // Set options
       // `highlight` example uses `highlight.js`
       myMarked.setOptions({
@@ -182,12 +192,6 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
       );
     },
     view: ({ attrs: { autoResize = true, preview, ...props } }) => {
-      if (preview) {
-        state.showPreview = true;
-        if (typeof preview === 'number') {
-          state.showPreviewHeight = preview;
-        }
-      }
       const { html, isEditing, markdown, selection, undo, showPreview, showPreviewHeight: previewHeight } = state;
 
       return isEditing
@@ -230,6 +234,16 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
                   { onclick: stopEditingCmd },
                   m('img', { width: '25', height: '25', src: stopIcon, alt: 'STOP' })
                 ),
+                m(
+                  'button.markdown-editor-button.right',
+                  { onclick: () => state.showPreview = !showPreview },
+                  m('img', {
+                    width: '25',
+                    height: '25',
+                    src: showPreview ? visibilityOnIcon : visibilityOffIcon,
+                    alt: 'VISIBILITY',
+                  })
+                ),
               ]),
               m(TextArea, {
                 ...props,
@@ -247,16 +261,13 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
                 oninput,
               }),
               showPreview
-                ? m(
-                    '.preview',
-                    {
-                      oncreate: ({ dom }) => {
-                        state.previewDom = dom as HTMLDivElement;
-                        updatePreview();
-                      },
-                      style: previewHeight ? `height: ${previewHeight}px; overflow-y: auto;` : undefined,
-                    }
-                  )
+                ? m('.preview', {
+                    oncreate: ({ dom }) => {
+                      state.previewDom = dom as HTMLDivElement;
+                      updatePreview();
+                    },
+                    style: previewHeight ? `height: ${previewHeight}px; overflow-y: auto;` : undefined,
+                  })
                 : undefined,
             ]
           )
