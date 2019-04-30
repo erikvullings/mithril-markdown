@@ -1,3 +1,9 @@
+.rpt2_cache
 node_modules
-tsconfig
-tslint
+assets
+src
+tsconfig.json
+tslint.json
+.postcssrc
+cssnano.config.js
+rollup.config.js
