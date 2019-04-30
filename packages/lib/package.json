@@ -2,7 +2,9 @@
   "name": "mithril-markdown",
   "version": "0.0.0",
   "description": "A markdown component for mithril.",
-  "main": "dist/index.js",
+  "main": "dist/mithril-markdown.umd.js",
+  "module": "dist/mithril-markdown.esm.js",
+  "browser": "dist/mithril-markdown.umd.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/erikvullings/mithril-markdown.git"
@@ -10,15 +12,17 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "link": "npm link",
-    "_start": "tsc -w",
-    "start": "parcel watch src/index.ts",
+    "start": "rollup -c -w",
     "build": "npm run build:production && npm run build:domain",
-    "build:production": "rm -fr ./dist && parcel build src/index.ts",
+    "build:production": "rm -fr ./dist && rollup -c",
     "build:domain": "typedoc --out ../../docs/typedoc src",
     "patch-release": "npm run build && npm version patch --force -m \"Patch release\" && npm publish && git push --follow-tags",
     "minor-release": "npm run build && npm version minor --force -m \"Minor release\" && npm publish && git push --follow-tags",
     "major-release": "npm run build && npm version major --force -m \"Major release\" && npm publish && git push --follow-tags"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "mithril",
     "contenteditable",
@@ -33,11 +37,14 @@
   "devDependencies": {
     "@types/marked": "^0.6.5",
     "@types/mithril": "^1.1.16",
-    "typedoc": "^0.14.2",
+    "rollup": "^1.0.0",
+    "rollup-plugin-commonjs": "^9.2.0",
+    "rollup-plugin-node-resolve": "^4.0.0",
+    "rollup-plugin-typescript2": "^0.21.0",
+    "rollup-plugin-postcss": "^2.0.3",
     "autoprefixer": "^9.5.1",
-    "cssnano": "^4.1.10",
-    "postcss-modules": "^1.4.1",
-    "parcel-bundler": "^1.12.3",
+    "ts-node": "^7.0.1",
+    "tslib": "^1.9.3",
     "typescript": "^3.4.4"
   },
   "peerDependencies": {
