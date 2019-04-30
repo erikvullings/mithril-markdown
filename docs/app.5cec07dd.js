@@ -19840,7 +19840,7 @@ var mithril_1 = __importDefault(require("mithril"));
 
 exports.EditorPage = function () {
   var state = {
-    markdown: "\n# Chapter\n\n## Section\n\n**Hello, world**\n\nVisit [Google](https://www.google.com).\n\nThis is a short line.\n\nNow this is a very long line, intended to wrap in the editor. But without linebreaks, so when we perform a multiline action, it should be treated as a single line.\n\nThis is a short list.\nEach line is separated by a linebreak.\nMultiline actions should be performed on each line.\n"
+    markdown: "\n# Chapter\n\n## Section\n\n**CLICK ON ME TO START EDITING**\n\nVisit [Google](https://www.google.com).\n\nThis is a short line.\n\nNow this is a very long line, intended to wrap in the editor. But without linebreaks, so when we perform a multiline action, it should be treated as a single line.\n\nThis is a short list.\nEach line is separated by a linebreak.\nMultiline actions should be performed on each line.\n"
   };
   return {
     view: function view() {
@@ -19849,10 +19849,11 @@ exports.EditorPage = function () {
         // style: 'height: 200px; max-height: 200px',
         // autoResize: false,
         markdown: state.markdown,
-        onchange: function onchange(markdown) {// console.log(markdown);
+        onchange: function onchange(markdown) {
+          console.log(markdown);
         }
       }), mithril_1.default(mithril_materialized_1.CodeBlock, {
-        code: "import { ContentEditable } from 'mithril-markdown';\nimport m from 'mithril';\n\n...\n\n    m(ContentEditable, {\n      // Original HTML input\n      html: state.html,\n      // Returns the updated HTML code\n      onchange: html => {\n        state.html = html;\n        console.log(html);\n      },\n      // Example to prevent the user from entering commas\n      onkeydown: e => {\n        if (e.key === ',') {\n          e.preventDefault();\n        }\n      },\n      // Replace the base tag, if needed\n      tagName: 'div',\n      // By default, &amp; etc are replaced by their normal counterpart when losing focus.\n      // cleanupHtml: false,\n      // By default, don't allow the user to enter newlines\n      // preventNewline: false,\n      // By default, select all text when the element receives focus\n      // selectAllOnFocus: false,\n      // By default, when pasting text, remove all HTML and keep the plain text.\n      // pasteAsPlainText: false,\n    }),\n"
+        code: "import { MarkdownEditor } from 'mithril-markdown';\nimport m from 'mithril';\n\n...\n\n    m(MarkdownEditor, {\n      preview: 200,\n      // style: 'height: 200px; max-height: 200px',\n      // autoResize: false,\n      markdown: state.markdown,\n      onchange: (markdown) => {\n        console.log(markdown);\n      },\n    }),\n"
       })]);
     }
   };
@@ -19879,13 +19880,13 @@ var mithril_materialized_1 = require("mithril-materialized");
 exports.HomePage = function () {
   return {
     view: function view() {
-      return mithril_1.default('.row', [mithril_1.default('.col.s12.m7.l8', mithril_1.default('.introduction', [mithril_1.default('h2', 'About mithril-markdown'), mithril_1.default('p', ["A component for Mithril to edit content. See the ", mithril_1.default('a[href=/markdown-editor]', {
+      return mithril_1.default('.row', [mithril_1.default('.col.s12.m7.l8', mithril_1.default('.introduction', [mithril_1.default('h2', 'About mithril-markdown'), mithril_1.default('p', ["A component for Mithril to edit markdown content. See the ", mithril_1.default('a[href=/markdown-editor]', {
         oncreate: mithril_1.default.route.link
       }, 'example.')]), mithril_1.default('p', ['You can check out the API documentation ', mithril_1.default('a[href="https://erikvullings.github.io/mithril-markdown/typedoc/index.html"]', 'here'), '.']), mithril_1.default('h3', 'Installation'), mithril_1.default('p', 'First, you need to install the required packages:'), mithril_1.default(mithril_materialized_1.CodeBlock, {
         language: 'console',
         code: "npm i mithril mithril-markdown\n# Also install the typings if you use TypeScript\nnpm i --save-dev @types/mithril"
       }), mithril_1.default('p', 'Next, you can use them inside your application:'), mithril_1.default(mithril_materialized_1.CodeBlock, {
-        code: "import { ContentEditable } from 'mithril-markdown';\n"
+        code: "import { MarkdownEditor } from 'mithril-markdown';\n"
       })])), mithril_1.default('.col.s12.m5.l4', [mithril_1.default('h1', 'Contents'), mithril_1.default('ul.collection', [dashboard_service_1.dashboardSvc.getList().filter(function (d) {
         return d.visible && !d.default;
       }).map(function (d) {
