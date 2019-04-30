@@ -18,6 +18,8 @@ export interface IMarkdownEditor extends Attributes {
   undoLimit?: number;
   /** Should the textarea automatically resize */
   autoResize?: boolean;
+  /** Add a preview when the value is true, or a number is specified (taken as the height of the area) */
+  preview?: boolean | number;
   /**
    * When a change occurs, the updated markdown is returned, as well as the HTML.
    * The returned markdown should be used as the markdown input for the editor in
@@ -32,7 +34,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     html: '',
     isEditing: false,
     shortcuts: {},
-    selection: { selectionStart: 0 },
+    selection: { selectionStart: 0, selectionEnd: 0 },
   } as {
     onchange?: (markdown: string, html: string) => void;
     markdown: string;
@@ -43,6 +45,9 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     undoDom: HTMLAnchorElement;
     redoDom: HTMLAnchorElement;
     shortcuts: { [key: string]: () => void };
+    previewDom?: HTMLDivElement;
+    showPreview?: boolean;
+    showPreviewHeight?: number;
   };
 
   const runCmd = (cmd: ICommandConfig) => {
@@ -56,6 +61,16 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
   };
 
   const stopEditingCmd = () => (state.isEditing = false);
+
+  const updatePreview = () => {
+    const { previewDom, markdown, selection: { selectionStart } } = state;
+    if (previewDom) {
+      const y = selectionStart / markdown.length * previewDom.scrollHeight;
+      const render = () => m('div', m.trust(myMarked(markdown)));
+      m.render(previewDom, render());
+      previewDom.scrollTo(0, y);
+    }
+  };
 
   const emitChange = (saveState = true) => {
     const { markdown, selection, onchange } = state;
@@ -87,6 +102,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     state.markdown = markdown;
     state.selection = selection;
     undo.add({ markdown, selection });
+    updatePreview();
   };
 
   const oninput = debounce(saveUndoState, 500);
@@ -165,8 +181,14 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
         {} as { [key: string]: () => void }
       );
     },
-    view: ({ attrs: { autoResize = true, ...props } }) => {
-      const { html, isEditing, markdown, selection, undo } = state;
+    view: ({ attrs: { autoResize = true, preview, ...props } }) => {
+      if (preview) {
+        state.showPreview = true;
+        if (typeof preview === 'number') {
+          state.showPreviewHeight = preview;
+        }
+      }
+      const { html, isEditing, markdown, selection, undo, showPreview, showPreviewHeight: previewHeight } = state;
 
       return isEditing
         ? m(
@@ -224,6 +246,18 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
                 },
                 oninput,
               }),
+              showPreview
+                ? m(
+                    '.preview',
+                    {
+                      oncreate: ({ dom }) => {
+                        state.previewDom = dom as HTMLDivElement;
+                        updatePreview();
+                      },
+                      style: previewHeight ? `height: ${previewHeight}px; overflow-y: auto;` : undefined,
+                    }
+                  )
+                : undefined,
             ]
           )
         : m(

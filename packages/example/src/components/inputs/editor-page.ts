@@ -29,6 +29,7 @@ Multiline actions should be performed on each line.
         m('h2.header', 'MarkdownEditor'),
 
         m(MarkdownEditor, {
+          preview: 200,
           // style: 'height: 200px; max-height: 200px',
           // autoResize: false,
           markdown: state.markdown,
