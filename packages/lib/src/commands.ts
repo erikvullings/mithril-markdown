@@ -9,7 +9,7 @@ import {
   inlineCodeIcon,
   linkIcon,
   imageIcon,
-} from './assets';
+} from './assets/index';
 
 /**
  * Commands for processing the markdown files using RegExp.

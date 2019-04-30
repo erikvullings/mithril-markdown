@@ -4,7 +4,7 @@ import { TextArea } from './text-area';
 import { executeCmd, ISelection, isLinkClicked, debounce } from './helpers';
 import { ICommandConfig, commands } from './commands';
 import { IUndoRedo, undoRedo } from './undo-redo';
-import { undoIcon, redoIcon, stopIcon, visibilityOnIcon, visibilityOffIcon } from './assets';
+import { undoIcon, redoIcon, stopIcon, visibilityOnIcon, visibilityOffIcon } from './assets/index';
 import './markdown-editor.css';
 
 export interface IMarkdownEditor extends Attributes {

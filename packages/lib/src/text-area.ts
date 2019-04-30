@@ -1,5 +1,5 @@
 import m, { FactoryComponent, Attributes } from 'mithril';
-import { ISelection } from '.';
+import { ISelection } from './index';
 
 export interface ITextArea extends Attributes {
   /** Displayed value */
