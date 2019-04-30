@@ -10,7 +10,7 @@ export const HomePage = () => ({
         m('.introduction', [
           m('h2', 'About mithril-markdown'),
           m('p', [
-            `A component for Mithril to edit content. See the `,
+            `A component for Mithril to edit markdown content. See the `,
             m('a[href=/markdown-editor]', { oncreate: m.route.link }, 'example.'),
           ]),
           m('p', [
@@ -28,7 +28,7 @@ npm i --save-dev @types/mithril`,
           }),
           m('p', 'Next, you can use them inside your application:'),
           m(CodeBlock, {
-            code: `import { ContentEditable } from 'mithril-markdown';
+            code: `import { MarkdownEditor } from 'mithril-markdown';
 `,
           }),
         ])

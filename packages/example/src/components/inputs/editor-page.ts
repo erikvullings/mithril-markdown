@@ -9,7 +9,7 @@ export const EditorPage = () => {
 
 ## Section
 
-**Hello, world**
+**CLICK ON ME TO START EDITING**
 
 Visit [Google](https://www.google.com).
 
