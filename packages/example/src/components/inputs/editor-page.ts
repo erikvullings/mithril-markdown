@@ -1,6 +1,6 @@
+import m from 'mithril';
 import { CodeBlock } from 'mithril-materialized';
 import { MarkdownEditor } from 'mithril-markdown';
-import m from 'mithril';
 
 export const EditorPage = () => {
   const state = {
