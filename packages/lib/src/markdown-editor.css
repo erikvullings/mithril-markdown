@@ -39,6 +39,14 @@
   opacity: 0.5;
   text-decoration: none;
 }
+.markdown-editor-right {
+  float: right !important;
+}
+.markdown-editor-textarea {
+  width: 100%;
+  height: 3rem;
+  background-color: transparent;
+}
 /* @media all (max-width:30em) {
 .markdown-editor-button {
 display:block;
