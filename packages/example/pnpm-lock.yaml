@@ -1,4 +1,5 @@
 dependencies:
+  marked: 0.6.2
   material-icons: 0.3.1
   materialize-css: 1.0.0
   mithril: 2.0.0-rc.4
@@ -10,7 +11,7 @@ devDependencies:
   autoprefixer: 9.5.1
   cssnano: 4.1.10
   parcel-bundler: 1.12.3
-  typescript: 3.4.4
+  typescript: 3.4.5
 lockfileVersion: 5
 packages:
   /@babel/code-frame/7.0.0:
@@ -3064,6 +3065,13 @@ packages:
       node: '>=0.10.0'
     resolution:
       integrity: sha1-7Nyo8TFE5mDxtb1B8S80edmN+48=
+  /marked/0.6.2:
+    dev: false
+    engines:
+      node: '>=0.10.0'
+    hasBin: true
+    resolution:
+      integrity: sha512-LqxwVH3P/rqKX4EKGz7+c2G9r98WeM/SW34ybhgNGhUQNKtf1GmmSkJ6cDGJ/t6tiyae49qRkpyTw2B9HOrgUA==
   /material-icons/0.3.1:
     dev: false
     resolution:
@@ -4903,13 +4911,13 @@ packages:
     dev: true
     resolution:
       integrity: sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
-  /typescript/3.4.4:
+  /typescript/3.4.5:
     dev: true
     engines:
       node: '>=4.2.0'
     hasBin: true
     resolution:
-      integrity: sha512-xt5RsIRCEaf6+j9AyOBgvVuAec0i92rgCaS3S+UVf5Z/vF2Hvtsw08wtUTJqp4djwznoAgjSxeCcU4r+CcDBJA==
+      integrity: sha512-YycBxUb49UUhdNMU5aJ7z5Ej2XGmaIBL0x34vZ82fn3hGvD+bgrMrVDpatgz2f7YxUMJxMkbWxJZeAvDxVe7Vw==
   /uncss/0.16.2:
     dependencies:
       commander: 2.20.0
@@ -5160,10 +5168,11 @@ specifiers:
   '@types/mithril': ^1.1.16
   autoprefixer: ^9.5.1
   cssnano: ^4.1.10
+  marked: ^0.6.2
   material-icons: ^0.3.1
   materialize-css: ^1.0.0
   mithril: next
-  mithril-markdown: ^0.0.0
+  mithril-markdown: ^0.1.5
   mithril-materialized: ^0.11.8
   parcel-bundler: ^1.12.3
-  typescript: ^3.4.4
+  typescript: ^3.4.5

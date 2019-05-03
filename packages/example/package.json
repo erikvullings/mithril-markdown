@@ -14,13 +14,14 @@
     "example",
     "mithril",
     "typescript",
-    "contenteditable"
+    "markdown",
+    "editor"
   ],
   "author": "Erik Vullings <erik.vullings@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "mithril": "next",
-    "mithril-markdown": "^0.0.0",
+    "mithril-markdown": "^0.1.5",
     "material-icons": "^0.3.1",
     "materialize-css": "^1.0.0",
     "mithril-materialized": "^0.11.8"
@@ -31,6 +32,6 @@
     "autoprefixer": "^9.5.1",
     "cssnano": "^4.1.10",
     "parcel-bundler": "^1.12.3",
-    "typescript": "^3.4.4"
+    "typescript": "^3.4.5"
   }
 }
