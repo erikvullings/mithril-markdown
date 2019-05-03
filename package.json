@@ -6,7 +6,7 @@
   "scripts": {
     "postinstall": "lerna run link",
     "link": "lerna run link",
-    "build:domain": "lerna run build:domain",
+    "build:domain": "lerna run build:domain --parallel",
     "start": "lerna run start --parallel",
     "patch-release": "lerna run patch-release --parallel",
     "minor-release": "lerna run minor-release --parallel",
