@@ -76,38 +76,6 @@ const inlineCodeCommandConfig = {
   offsets: [0, 2],
 } as ICommandConfig;
 
-// const underlineCommandConfig = {
-//   name: 'Underline',
-//   detect: /_(\S.*?\S)_/gi,
-//   multiline: false,
-//   on: [/(.+)/gi, '_$1_'],
-//   off: [/_(\S.*?\S)_/gi, '$1'],
-// } as ICommandConfig;
-
-// const markCommandConfig = {
-//   name: 'Mark',
-//   detect: /==(\S.*?\S)==/gi,
-//   multiline: false,
-//   on: [/(.+)/gi, '==$1=='],
-//   off: [/==(\S.*?\S)==/gi, '$1'],
-// } as ICommandConfig;
-
-// const superscriptCommandConfig = {
-//   name: 'Superscript',
-//   detect: /\^(\S.*?\S)\^/gi,
-//   multiline: false,
-//   on: [/(.+)/gi, '^$1^'],
-//   off: [/\^(\S.*?\S)\^/gi, '$1'],
-// } as ICommandConfig;
-
-// const subscriptCommandConfig = {
-//   name: 'Subscript',
-//   detect: /~(\S.*?\S)~/gi,
-//   multiline: false,
-//   on: [/(.+)/gi, '~$1~'],
-//   off: [/~(\S.*?\S)~/gi, '$1'],
-// } as ICommandConfig;
-
 const strikethroughCommandConfig = {
   name: 'Strikethrough',
   icon: strikethroughIcon,
@@ -191,10 +159,6 @@ export const commands = [
   strikethroughCommandConfig,
   linkCommandConfig,
   imageCommandConfig,
-  // underlineCommandConfig,
-  // markCommandConfig,
-  // superscriptCommandConfig,
-  // subscriptCommandConfig,
   codeInlineCommandConfig,
   unorderedListCommandConfig,
   orderedListCommandConfig,
