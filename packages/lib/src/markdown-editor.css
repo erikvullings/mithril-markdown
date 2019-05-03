@@ -42,7 +42,7 @@
 .markdown-editor-right {
   float: right !important;
 }
-.markdown-editor-textarea {
+textarea.markdown-editor-textarea {
   width: 100%;
   height: 3rem;
   background-color: transparent;
