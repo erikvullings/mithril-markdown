@@ -1,5 +1,5 @@
 import m, { FactoryComponent, Attributes } from 'mithril';
-import myMarked, { MarkedOptions } from 'marked';
+import marked, { MarkedOptions } from 'marked';
 import { TextArea } from './text-area';
 import { executeCmd, ISelection, isLinkClicked, debounce } from './helpers';
 import { ICommandConfig, commands } from './commands';
@@ -70,7 +70,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     } = state;
     if (previewDom) {
       const y = (selectionStart / markdown.length) * previewDom.scrollHeight;
-      const render = () => m('div', m.trust(myMarked(markdown)));
+      const render = () => m('div', m.trust(marked(markdown)));
       m.render(previewDom, render());
       previewDom.scrollTo(0, y);
     }
@@ -78,7 +78,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
 
   const emitChange = (saveState = true) => {
     const { markdown, selection, onchange } = state;
-    state.html = myMarked(markdown);
+    state.html = marked(markdown);
     if (saveState) {
       saveUndoState(markdown, selection);
     }
@@ -149,9 +149,9 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
       }
       // Set options
       // `highlight` example uses `highlight.js`
-      myMarked.setOptions({
+      marked.setOptions({
         ...{
-          renderer: new myMarked.Renderer(),
+          renderer: new marked.Renderer(),
           // highlight: (code) => require('highlight.js').highlightAuto(code).value,
           headerIds: true,
           headerPrefix: 'header',
@@ -170,7 +170,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
 
       const { selection } = state;
       state.markdown = markdown;
-      state.html = myMarked(markdown);
+      state.html = marked(markdown);
       state.onchange = onchange;
       state.undo = undoRedo(
         { markdown, selection },
@@ -230,12 +230,12 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
                   m('img', { width: '25', height: '25', src: undoIcon, alt: 'UNDO' })
                 ),
                 m(
-                  'button.markdown-editor-button.right',
+                  'button.markdown-editor-button.markdown-editor-right',
                   { onclick: stopEditingCmd },
                   m('img', { width: '25', height: '25', src: stopIcon, alt: 'STOP' })
                 ),
                 m(
-                  'button.markdown-editor-button.right',
+                  'button.markdown-editor-button.markdown-editor-right',
                   { onclick: () => state.showPreview = !showPreview },
                   m('img', {
                     width: '25',
