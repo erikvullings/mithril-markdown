@@ -1,50 +1,60 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
+import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
-import postcss from 'rollup-plugin-postcss'
-import pkg from './package.json';
+import postcss from 'rollup-plugin-postcss';
+import json from 'rollup-plugin-json';
+import { terser } from 'rollup-plugin-terser';
 
-export default [
-  // browser-friendly UMD build
-  {
-    input: 'src/index.ts',
-    external: ['mithril'],
-    output: {
-      name: 'mithril-markdown',
-      file: pkg.browser,
-      format: 'umd',
-      globals: {
-        'mithril': 'm'
-      }
+const pkg = require('./package.json');
+
+export default {
+  input: `src/index.ts`,
+  watch: 'src/**',
+  output: [
+    {
+      file: pkg.module,
+      format: 'es',
+      sourcemap: true,
     },
-    plugins: [
-      resolve({ browser: true }), // so Rollup can find `marked`
-      commonjs(), // so Rollup can convert `marked` to an ES module, if needed
-      postcss(
-        // { plugins: [] }
-      ),
-      typescript(), // so Rollup can convert TypeScript to JavaScript
-    ],
+    {
+      file: pkg.main,
+      format: 'iife',
+      name: 'MarkdownEditor',
+      sourcemap: true,
+      globals: {
+        mithril: 'm',
+      },
+    },
+  ],
+  // Indicate here external modules you don't want to include in your bundle
+  external: ['mithril'],
+  // external: [...Object.keys(pkg.dependencies || {})],
+  watch: {
+    include: 'src/**',
   },
-
-  // CommonJS (for Node) and ES module (for bundlers) build.
-  // (We could have three entries in the configuration array
-  // instead of two, but it's quicker to generate multiple
-  // builds from a single configuration where possible, using
-  // an array for the `output` option, where we can specify
-  // `file` and `format` for each target)
-  {
-    input: 'src/index.ts',
-    external: ['mithril'],
-    plugins: [
-      resolve({ browser: true }), // so Rollup can find `marked`
-      commonjs(), // so Rollup can convert `marked` to an ES module, if needed
-      postcss(),
-      typescript(), // so Rollup can convert TypeScript to JavaScript
-    ],
-    output: [
-      // { file: pkg.main, format: 'cjs' },
-      { file: pkg.module, format: 'es' },
-    ],
-  },
-];
+  plugins: [
+    // Allow json resolution
+    json(),
+    postcss(),
+    // Compile TypeScript files
+    typescript({
+      rollupCommonJSResolveHack: true,
+      typescript: require('typescript'),
+    }),
+    // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
+    commonjs(),
+    // Allow node_modules resolution, so you can use 'external' to control
+    // which external modules to include in the bundle
+    // https://github.com/rollup/rollup-plugin-node-resolve#usage
+    resolve({
+      customResolveOptions: {
+        moduleDirectory: 'node_modules',
+      },
+    }),
+    // Resolve source maps to the original source
+    sourceMaps(),
+    // minifies generated bundles
+    terser(),
+  ],
+};
