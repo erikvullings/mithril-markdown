@@ -28,6 +28,14 @@ export interface IMarkdownEditor extends Attributes {
   onchange?: (markdown: string, html: string) => void;
 }
 
+/**
+ * Parse markdown
+ *
+ * Simple helper function to enable others to also use the markdown parser inside their own code, 
+ * without the need to require it again.
+ */
+export const parse = (markdown: string) => marked(markdown);
+
 export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
   const state = {
     markdown: '',
