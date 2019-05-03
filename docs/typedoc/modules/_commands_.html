@@ -103,7 +103,7 @@
 					<div class="tsd-signature tsd-kind-icon">block<wbr>Quote<wbr>Command<wbr>Config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_commands_.icommandconfig.html" class="tsd-signature-type">ICommandConfig</a><span class="tsd-signature-symbol"> =&nbsp;{name: &#x27;Block quote&#x27;,icon: quoteIcon,shortcut: &#x27;CTRL+Q&#x27;,detect: /(^|\n)&gt;[^\S\n]*(.*?)[^\S\n]*(?&#x3D;$|\n)/i,multiline: true,on: [/(^|\n)[^\S\n]*(.*?)[^\S\n]*(?&#x3D;$|\n)/gi, &#x27;$1&gt; $2&#x27;],off: [/(^|\n)&gt;[^\S\n]+(.*?)[^\S\n]*(?&#x3D;$|\n)/gi, &#x27;$1$2&#x27;],offsets: [0, 2],} as ICommandConfig</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/3491db3/packages/lib/src/commands.ts#L176">commands.ts:176</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/c3e6db8/packages/lib/src/commands.ts#L144">commands.ts:144</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -113,7 +113,7 @@
 					<div class="tsd-signature tsd-kind-icon">bold<wbr>Command<wbr>Config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_commands_.icommandconfig.html" class="tsd-signature-type">ICommandConfig</a><span class="tsd-signature-symbol"> =&nbsp;{name: &#x27;Bold&#x27;,shortcut: &#x27;CTRL+B&#x27;,icon: boldIcon,detect: /\*\*(\S.*?\S)\*\*/i,multiline: false,on: [/(.+)/gi, &#x27;**$1**&#x27;],off: [/\*\*(\S.*?\S)\*\*/gi, &#x27;$1&#x27;],// In on state, the whole word is selected, so the start of the selection points to **, so extend with 4offsets: [0, 4],} as ICommandConfig</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/3491db3/packages/lib/src/commands.ts#L45">commands.ts:45</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/c3e6db8/packages/lib/src/commands.ts#L45">commands.ts:45</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -123,17 +123,17 @@
 					<div class="tsd-signature tsd-kind-icon">code<wbr>Inline<wbr>Command<wbr>Config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_commands_.icommandconfig.html" class="tsd-signature-type">ICommandConfig</a><span class="tsd-signature-symbol"> =&nbsp;{name: &#x27;Code inline&#x27;,icon: codeIcon,detect: /^&#x60;&#x60;&#x60;\r?\n[\S\s]+\r?\n&#x60;&#x60;&#x60;\s*$/i,multiline: true,merge: true,on: [/((?:\S|\s)+)/gi, &#x27;&#x60;&#x60;&#x60;\n$1\n&#x60;&#x60;&#x60;&#x27;],off: [/^&#x60;&#x60;&#x60;\r?\n([\S\s]+)\r?\n&#x60;&#x60;&#x60;\s*$/gi, &#x27;$1&#x27;],offsets: [0, 8],} as ICommandConfig</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/3491db3/packages/lib/src/commands.ts#L143">commands.ts:143</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/c3e6db8/packages/lib/src/commands.ts#L111">commands.ts:111</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-external-module">
 					<a name="commands" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagConst">Const</span> commands</h3>
-					<div class="tsd-signature tsd-kind-icon">commands<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_commands_.icommandconfig.html" class="tsd-signature-type">ICommandConfig</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[boldCommandConfig,italicsCommandConfig,inlineCodeCommandConfig,strikethroughCommandConfig,linkCommandConfig,imageCommandConfig,// underlineCommandConfig,// markCommandConfig,// superscriptCommandConfig,// subscriptCommandConfig,codeInlineCommandConfig,unorderedListCommandConfig,orderedListCommandConfig,blockQuoteCommandConfig,]</span></div>
+					<div class="tsd-signature tsd-kind-icon">commands<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_commands_.icommandconfig.html" class="tsd-signature-type">ICommandConfig</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol"> =&nbsp;[boldCommandConfig,italicsCommandConfig,inlineCodeCommandConfig,strikethroughCommandConfig,linkCommandConfig,imageCommandConfig,codeInlineCommandConfig,unorderedListCommandConfig,orderedListCommandConfig,blockQuoteCommandConfig,]</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/3491db3/packages/lib/src/commands.ts#L187">commands.ts:187</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/c3e6db8/packages/lib/src/commands.ts#L155">commands.ts:155</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -143,7 +143,7 @@
 					<div class="tsd-signature tsd-kind-icon">image<wbr>Command<wbr>Config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_commands_.icommandconfig.html" class="tsd-signature-type">ICommandConfig</a><span class="tsd-signature-symbol"> =&nbsp;{name: &#x27;Image&#x27;,shortcut: &#x27;CTRL+P&#x27;,icon: imageIcon,detect: /!\[(.*?)\]\(.*\)/i,multiline: false,on: [/(.+)/gi, &#x27;![$1](http://URL)&#x27;],off: [/!\[(.*?)\]\(.*\)/gi, &#x27;$1&#x27;],offsets: [0, 15],} as ICommandConfig</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/3491db3/packages/lib/src/commands.ts#L132">commands.ts:132</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/c3e6db8/packages/lib/src/commands.ts#L100">commands.ts:100</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -153,7 +153,7 @@
 					<div class="tsd-signature tsd-kind-icon">inline<wbr>Code<wbr>Command<wbr>Config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_commands_.icommandconfig.html" class="tsd-signature-type">ICommandConfig</a><span class="tsd-signature-symbol"> =&nbsp;{name: &#x27;Inline code&#x27;,shortcut: &#x27;CTRL+E&#x27;,icon: inlineCodeIcon,detect: /&#x60;(\S.*?\S)&#x60;(?!&#x3D;&#x60;)/i,multiline: false,on: [/(.+)/gi, &#x27;&#x60;$1&#x60;&#x27;],off: [/&#x60;(\S.*?\S)&#x60;/gi, &#x27;$1&#x27;],offsets: [0, 2],} as ICommandConfig</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/3491db3/packages/lib/src/commands.ts#L68">commands.ts:68</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/c3e6db8/packages/lib/src/commands.ts#L68">commands.ts:68</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -163,7 +163,7 @@
 					<div class="tsd-signature tsd-kind-icon">italics<wbr>Command<wbr>Config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_commands_.icommandconfig.html" class="tsd-signature-type">ICommandConfig</a><span class="tsd-signature-symbol"> =&nbsp;{name: &#x27;Italics&#x27;,shortcut: &#x27;CTRL+I&#x27;,icon: italicsIcon,detect: /\*(\S.*?\S)\*(?!&#x3D;\*)/i,multiline: false,on: [/(.+)/gi, &#x27;*$1*&#x27;],off: [/\*(\S.*?\S)\*/gi, &#x27;$1&#x27;],offsets: [0, 2],} as ICommandConfig</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/3491db3/packages/lib/src/commands.ts#L57">commands.ts:57</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/c3e6db8/packages/lib/src/commands.ts#L57">commands.ts:57</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -173,7 +173,7 @@
 					<div class="tsd-signature tsd-kind-icon">link<wbr>Command<wbr>Config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_commands_.icommandconfig.html" class="tsd-signature-type">ICommandConfig</a><span class="tsd-signature-symbol"> =&nbsp;{name: &#x27;Link&#x27;,shortcut: &#x27;CTRL+L&#x27;,icon: linkIcon,detect: /\[(.*?)\]\(.*\)/i,multiline: false,on: [/(.+)/gi, &#x27;[$1](http://URL &quot;TITLE&quot;)&#x27;],off: [/\[(.*?)\]\(.*\)/gi, &#x27;$1&#x27;],offsets: [0, 22],} as ICommandConfig</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/3491db3/packages/lib/src/commands.ts#L121">commands.ts:121</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/c3e6db8/packages/lib/src/commands.ts#L89">commands.ts:89</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -183,7 +183,7 @@
 					<div class="tsd-signature tsd-kind-icon">ordered<wbr>List<wbr>Command<wbr>Config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_commands_.icommandconfig.html" class="tsd-signature-type">ICommandConfig</a><span class="tsd-signature-symbol"> =&nbsp;{name: &#x27;Ordered list&#x27;,icon: orderedIcon,shortcut: &#x27;CTRL+O&#x27;,detect: /(^|\n)(?:\d+\.)\s+(.+)\s*(?&#x3D;$|\n)/i,multiline: true,on: [/(^|\n)\s*(.+?)\s*(?&#x3D;$|\n)/gi, &#x27;$11. $2&#x27;],off: [/(^|\n)(?:\d+\.)\s+(.+)\s*(?&#x3D;$|\n)/gi, &#x27;$1$2&#x27;],offsets: [0, 3],} as ICommandConfig</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/3491db3/packages/lib/src/commands.ts#L165">commands.ts:165</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/c3e6db8/packages/lib/src/commands.ts#L133">commands.ts:133</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -193,7 +193,7 @@
 					<div class="tsd-signature tsd-kind-icon">strikethrough<wbr>Command<wbr>Config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_commands_.icommandconfig.html" class="tsd-signature-type">ICommandConfig</a><span class="tsd-signature-symbol"> =&nbsp;{name: &#x27;Strikethrough&#x27;,icon: strikethroughIcon,detect: /~~(\S.*?\S)~~/i,multiline: false,on: [/(.+)/gi, &#x27;~~$1~~&#x27;],off: [/~~(\S.*?\S)~~/gi, &#x27;$1&#x27;],offsets: [0, 4],} as ICommandConfig</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/3491db3/packages/lib/src/commands.ts#L111">commands.ts:111</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/c3e6db8/packages/lib/src/commands.ts#L79">commands.ts:79</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -203,7 +203,7 @@
 					<div class="tsd-signature tsd-kind-icon">unordered<wbr>List<wbr>Command<wbr>Config<span class="tsd-signature-symbol">:</span> <a href="../interfaces/_commands_.icommandconfig.html" class="tsd-signature-type">ICommandConfig</a><span class="tsd-signature-symbol"> =&nbsp;{name: &#x27;Unordered list&#x27;,icon: unorderedIcon,shortcut: &#x27;CTRL+U&#x27;,detect: /(^|\n)-\s+(.+)\s*(?&#x3D;$|\n)/i,multiline: true,on: [/(^|\n)\s*(.+?)\s*(?&#x3D;$|\n)/gi, &#x27;$1- $2&#x27;],off: [/(^|\n)-\s+(.+)\s*(?&#x3D;$|\n)/gi, &#x27;$1$2&#x27;],offsets: [0, 2],} as ICommandConfig</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/3491db3/packages/lib/src/commands.ts#L154">commands.ts:154</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/c3e6db8/packages/lib/src/commands.ts#L122">commands.ts:122</a></li>
 						</ul>
 					</aside>
 				</section>
