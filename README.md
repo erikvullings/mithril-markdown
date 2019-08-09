@@ -1,14 +1,14 @@
 # mithril-markdown
 
-Mithril markdown editor component: click on the HTML to open the markdown editor, edit the markdown, and close it again to render the HTML. Uses [marked](https://www.npmjs.com/package/marked) for markdown processing.
+Mithril markdown editor component: click on the HTML to open the markdown editor, edit the markdown, and close it again to render the HTML. Depends on [marked](https://www.npmjs.com/package/marked) for markdown processing.
 
 ## Installation
 
-Pull it from [npm](https://www.npmjs.com/package/mithril-markdown).
+Get it from [npm](https://www.npmjs.com/package/mithril-markdown).
 
 ```bash
 npm i mithril mithril-markdown
-# Also install the typings if you use TypeScript
+# If you use TypeScript, also install the typings
 npm i --save-dev @types/mithril
 ```
 

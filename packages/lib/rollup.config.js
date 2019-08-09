@@ -1,6 +1,6 @@
 import resolve from 'rollup-plugin-node-resolve';
 import commonjs from 'rollup-plugin-commonjs';
-import sourceMaps from 'rollup-plugin-sourcemaps';
+// import sourceMaps from 'rollup-plugin-sourcemaps';
 import typescript from 'rollup-plugin-typescript2';
 import postcss from 'rollup-plugin-postcss';
 import json from 'rollup-plugin-json';
@@ -53,7 +53,7 @@ export default {
       },
     }),
     // Resolve source maps to the original source
-    sourceMaps(),
+    // sourceMaps(),
     // minifies generated bundles
     terser(),
   ],

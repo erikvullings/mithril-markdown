@@ -7,6 +7,7 @@
     "postinstall": "lerna run link",
     "link": "lerna run link",
     "build:domain": "lerna run build:domain --parallel",
+    "clean": "lerna run clean --parallel",
     "start": "lerna run start --parallel",
     "patch-release": "lerna run patch-release --parallel",
     "minor-release": "lerna run minor-release --parallel",

@@ -77,9 +77,10 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
       selection: { selectionStart },
     } = state;
     if (previewDom) {
-      const y = (selectionStart / markdown.length) * previewDom.scrollHeight;
-      const render = () => m('div', m.trust(marked(markdown)));
-      m.render(previewDom, render());
+      const y = (selectionStart / (markdown ? markdown.length : 1)) * previewDom.scrollHeight;
+      // const render = () => m('div', m.trust(marked(markdown)));
+      // m.render(previewDom, render());
+      m.render(previewDom, m.trust(marked(markdown)));
       previewDom.scrollTo(0, y);
     }
   };
