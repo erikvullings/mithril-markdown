@@ -1,6 +1,6 @@
 {
   "name": "mithril-markdown",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "A markdown component for mithril.",
   "main": "dist/mithril-markdown.js",
   "module": "dist/mithril-markdown.mjs",
