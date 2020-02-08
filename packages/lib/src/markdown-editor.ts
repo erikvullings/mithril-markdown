@@ -133,6 +133,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     state.markdown = markdown;
     state.selection = selection;
     emitChange(false);
+    updatePreview();
     m.redraw();
   };
 
