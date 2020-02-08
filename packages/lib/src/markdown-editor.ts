@@ -111,11 +111,14 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
   };
 
   const saveUndoState = (markdown: string, selection: ISelection) => {
-    const { undo } = state;
+    const { undo, onchange } = state;
     state.markdown = markdown;
     state.selection = selection;
     undo.add({ markdown, selection });
     updatePreview();
+    if (onchange) {
+      onchange(state.markdown, state.html);
+    }
   };
 
   const oninput = debounce(saveUndoState, 500);
@@ -130,6 +133,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     state.markdown = markdown;
     state.selection = selection;
     emitChange(false);
+    updatePreview();
     m.redraw();
   };
 
