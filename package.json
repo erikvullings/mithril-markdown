@@ -4,8 +4,6 @@
   "description": "Mithril  component for a div with editable contents",
   "main": "index.js",
   "scripts": {
-    "postinstall": "lerna run link",
-    "link": "lerna run link",
     "build:domain": "lerna run build:domain --parallel",
     "clean": "lerna run clean --parallel",
     "start": "lerna run start --parallel",
@@ -28,6 +26,6 @@
   },
   "homepage": "https://github.com/erikvullings/mithril-markdown#readme",
   "devDependencies": {
-    "lerna": "^3.13.3"
+    "lerna": "^3.20.2"
   }
 }

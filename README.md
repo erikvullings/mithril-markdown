@@ -45,4 +45,4 @@ npm start
 
 ## SVG instructions
 
-I've used [Inkscape](http://inkscape.org) to create the button icons and the CLI `svgo` (`npm i -g svgo`) tool to clean them up (`svgo -f assets`) and convert them to base64 (e.g. `svgo src\assets\strikethrough.svg --datauri=base64`). After the base64 encoding, I've manually converted them to a TypeScript constant, so I could include them easily as image source.
+I've used [Inkscape](http://inkscape.org) to create the button icons and the CLI [svgo](https://www.npmjs.com/package/svgo) (`npm i -g svgo`) tool to clean them up (`svgo -f assets`) and convert them to base64 (e.g. `svgo src\assets\strikethrough.svg --datauri=base64`). After the base64 encoding, I've manually converted them to a TypeScript constant, so I could include them easily as image source.

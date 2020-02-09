@@ -6,7 +6,6 @@
   "scripts": {
     "start": "parcel index.html --out-dir ../../docs",
     "build:domain": "rm -fr ../../docs && parcel build index.html --out-dir ../../docs --public-url https://erikvullings.github.io/mithril-markdown && cp favicon.ico ../../docs/",
-    "link": "npm link mithril-markdown",
     "build": "npm run clean && parcel build index.html",
     "clean": "rimraf dist .cache"
   },
@@ -20,19 +19,22 @@
   "author": "Erik Vullings <erik.vullings@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "mithril": "2.0.1",
-    "mithril-markdown": "^0.2.1",
+    "marked": "^0.8.0",
     "material-icons": "^0.3.1",
     "materialize-css": "^1.0.0",
-    "mithril-materialized": "^0.14.0"
+    "mithril": "2.0.4",
+    "mithril-markdown": "^0.2.2",
+    "mithril-materialized": "^0.16.1",
+    "slimdown-js": "0.2.1"
   },
   "devDependencies": {
-    "@types/materialize-css": "^1.0.6",
-    "@types/mithril": "^2.0.0",
-    "autoprefixer": "^9.6.1",
+    "@types/materialize-css": "^1.0.7",
+    "@types/marked": "^0.7.2",
+    "@types/mithril": "^2.0.2",
+    "autoprefixer": "^9.7.4",
     "cssnano": "^4.1.10",
-    "parcel-bundler": "^1.12.3",
-    "rimraf": "2.6.3",
-    "typescript": "^3.5.3"
+    "parcel-bundler": "^1.12.4",
+    "rimraf": "3.0.1",
+    "typescript": "^3.7.5"
   }
 }
