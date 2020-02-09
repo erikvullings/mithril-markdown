@@ -9,19 +9,21 @@
   text-decoration: none;
 }
 .markdown-editor-button-group {
-  background: lightgray;
+  background-color: transparent;
   width: 100%;
 }
 .markdown-editor-button {
   display: inline-block;
   padding: 0.3em;
-  border: 0.15em solid #cccccc;
+  /* border: 0.15em solid #5f5959; */
+  border: 0.15em solid transparent;
   box-sizing: border-box;
   text-decoration: none;
   font-family: 'Segoe UI', 'Roboto', sans-serif;
   font-weight: 400;
   color: #000000;
-  background-color: #cccccc;
+  /* background-color: #cccccc; */
+  background-color: transparent;
   text-align: center;
   position: relative;
 }
@@ -46,6 +48,9 @@ textarea.markdown-editor-textarea {
   width: 100%;
   height: 3rem;
   background-color: transparent;
+}
+.markdown-html-area.enabled {
+  cursor: pointer;
 }
 /* @media all (max-width:30em) {
 .markdown-editor-button {
