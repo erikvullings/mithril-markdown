@@ -1,6 +1,6 @@
 # mithril-markdown
 
-Mithril markdown editor component: click on the HTML to open the markdown editor, edit the markdown, and close it again to render the HTML. Depends on [marked](https://www.npmjs.com/package/marked) for markdown processing.
+Mithril markdown editor component: click on the HTML to open the markdown editor, edit the markdown, and close it again to render the HTML. Requires a markdown parser to convert the markdown text into HTML. A popular and fast markdown parser is [marked](https://www.npmjs.com/package/marked) for markdown processing. Alternatively, a smaller (and simpler) markdown parser that works too is [slimdown-js](https://www.npmjs.com/package/slimdown-js).
 
 ## Installation
 
@@ -20,18 +20,19 @@ There is a small [playground](https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAO
 
 ```ts
 import m from 'mithril';
+import marked from 'marked';
 import { MarkdownEditor } from 'mithril-markdown';
 
 ...
 
   m(MarkdownEditor, {
+    parse: marked,
     preview: 500,
     markdown: state.markdown,
     onchange: (markdown) => {
       console.log(markdown);
     },
   }),
-
 ```
 
 ## Build instructions

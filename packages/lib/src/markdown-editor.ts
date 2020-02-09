@@ -1,5 +1,4 @@
 import m, { FactoryComponent, Attributes } from 'mithril';
-import marked, { MarkedOptions } from 'marked';
 import { TextArea } from './text-area';
 import { executeCmd, ISelection, isLinkClicked, debounce } from './helpers';
 import { ICommandConfig, commands } from './commands';
@@ -8,12 +7,16 @@ import { undoIcon, redoIcon, stopIcon, visibilityOnIcon, visibilityOffIcon } fro
 import './markdown-editor.css';
 
 export interface IMarkdownEditor extends Attributes {
+  /**
+   * Required parser function to parse markdown to HTML. E.g.
+   * import marked from 'marked';
+   * parse: marked
+   */
+  parse: (markdown: string) => string;
   /** Markdown to render */
   markdown: string;
   /** If true, do not allow the markdown to be rendered, only displaying the HTML */
   disabled?: boolean;
-  /** Options for the markdown parser, marked */
-  options?: MarkedOptions;
   /** Undo buffer limit, @default 10 */
   undoLimit?: number;
   /** Should the textarea automatically resize */
@@ -28,14 +31,6 @@ export interface IMarkdownEditor extends Attributes {
   onchange?: (markdown: string, html: string) => void;
 }
 
-/**
- * Parse markdown
- *
- * Simple helper function to enable others to also use the markdown parser inside their own code, 
- * without the need to require it again.
- */
-export const parse = (markdown: string) => marked(markdown);
-
 export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
   const state = {
     markdown: '',
@@ -45,6 +40,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     selection: { selectionStart: 0, selectionEnd: 0 },
   } as {
     onchange?: (markdown: string, html: string) => void;
+    parse: (markdown: string) => string;
     markdown: string;
     html: string;
     isEditing: boolean;
@@ -72,6 +68,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
 
   const updatePreview = () => {
     const {
+      parse,
       previewDom,
       markdown,
       selection: { selectionStart },
@@ -80,14 +77,14 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
       const y = (selectionStart / (markdown ? markdown.length : 1)) * previewDom.scrollHeight;
       // const render = () => m('div', m.trust(marked(markdown)));
       // m.render(previewDom, render());
-      m.render(previewDom, m.trust(marked(markdown)));
+      m.render(previewDom, m.trust(parse(markdown)));
       previewDom.scrollTo(0, y);
     }
   };
 
   const emitChange = (saveState = true) => {
-    const { markdown, selection, onchange } = state;
-    state.html = marked(markdown);
+    const { markdown, selection, onchange, parse } = state;
+    state.html = parse(markdown);
     if (saveState) {
       saveUndoState(markdown, selection);
     }
@@ -153,37 +150,18 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
   };
 
   return {
-    oninit: ({ attrs: { markdown, onchange, options, undoLimit = 10, preview } }) => {
+    oninit: ({ attrs: { markdown, onchange, parse, undoLimit = 10, preview } }) => {
       if (preview) {
         state.showPreview = true;
         if (typeof preview === 'number') {
           state.showPreviewHeight = preview;
         }
       }
-      // Set options
-      // `highlight` example uses `highlight.js`
-      marked.setOptions({
-        ...{
-          renderer: new marked.Renderer(),
-          // highlight: (code) => require('highlight.js').highlightAuto(code).value,
-          headerIds: true,
-          headerPrefix: 'header',
-          langPrefix: 'ts',
-          pedantic: false,
-          gfm: true,
-          tables: true,
-          breaks: true,
-          sanitize: false,
-          smartLists: true,
-          smartypants: true,
-          xhtml: false,
-        },
-        ...options,
-      });
 
       const { selection } = state;
       state.markdown = markdown;
-      state.html = marked(markdown);
+      state.html = parse(markdown);
+      state.parse = parse;
       state.onchange = onchange;
       state.undo = undoRedo(
         { markdown, selection },
@@ -196,15 +174,12 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
         { key: 'CTRL+Z', cmd: () => undoRedoCmd(true) },
         { key: 'CTRL+Y', cmd: () => undoRedoCmd(false) },
         { key: 'CTRL+S', cmd: () => stopEditingCmd() },
-      ].reduce(
-        (acc, cur) => {
-          acc[cur.key] = cur.cmd;
-          return acc;
-        },
-        {} as { [key: string]: () => void }
-      );
+      ].reduce((acc, cur) => {
+        acc[cur.key] = cur.cmd;
+        return acc;
+      }, {} as { [key: string]: () => void });
     },
-    view: ({ attrs: { autoResize = true, preview, ...props } }) => {
+    view: ({ attrs: { autoResize = true, preview, disabled, ...props } }) => {
       const { html, isEditing, markdown, selection, undo, showPreview, showPreviewHeight: previewHeight } = state;
 
       return isEditing
@@ -249,7 +224,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
                 ),
                 m(
                   'button.markdown-editor-button.markdown-editor-right',
-                  { onclick: () => state.showPreview = !showPreview },
+                  { onclick: () => (state.showPreview = !showPreview) },
                   m('img', {
                     width: '25',
                     height: '25',
@@ -285,11 +260,14 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
             ]
           )
         : m(
-            '.html-area',
+            '.markdown-html-area',
             {
-              onclick: (e: Event) => {
-                state.isEditing = !isLinkClicked(e);
-              },
+              className: disabled ? 'disabled' : 'enabled',
+              onclick: disabled
+                ? undefined
+                : (e: Event) => {
+                    state.isEditing = !isLinkClicked(e);
+                  },
             },
             m.trust(html)
           );
