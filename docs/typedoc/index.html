@@ -56,7 +56,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> mithril-markdown</h1>
+			<h1>mithril-markdown</h1>
 		</div>
 	</div>
 </header>
@@ -67,7 +67,7 @@
 				<a href="#mithril-markdown" id="mithril-markdown" style="color: inherit; text-decoration: none;">
 					<h1>mithril-markdown</h1>
 				</a>
-				<p>Mithril markdown editor component: click on the HTML to open the markdown editor, edit the markdown, and close it again to render the HTML. Depends on <a href="https://www.npmjs.com/package/marked">marked</a> for markdown processing.</p>
+				<p>Mithril markdown editor component: click on the HTML to open the markdown editor, edit the markdown, and close it again to render the HTML. Requires a markdown parser to convert the markdown text into HTML. A popular and fast markdown parser is <a href="https://www.npmjs.com/package/marked">marked</a> for markdown processing. Alternatively, a smaller (and simpler) markdown parser that works too is <a href="https://www.npmjs.com/package/slimdown-js">slimdown-js</a>.</p>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
 				</a>
@@ -83,18 +83,19 @@ npm i --save-dev @types/mithril</code></pre>
 					<h2>Usage example</h2>
 				</a>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> m <span class="hljs-keyword">from</span> <span class="hljs-string">'mithril'</span>;
+<span class="hljs-keyword">import</span> marked <span class="hljs-keyword">from</span> <span class="hljs-string">'marked'</span>;
 <span class="hljs-keyword">import</span> { MarkdownEditor } <span class="hljs-keyword">from</span> <span class="hljs-string">'mithril-markdown'</span>;
 
 ...
 
   m(MarkdownEditor, {
+    parse: marked,
     preview: <span class="hljs-number">500</span>,
     markdown: state.markdown,
     onchange: <span class="hljs-function">(<span class="hljs-params">markdown</span>) =&gt;</span> {
       <span class="hljs-built_in">console</span>.log(markdown);
     },
-  }),
-</code></pre>
+  }),</code></pre>
 				<a href="#build-instructions" id="build-instructions" style="color: inherit; text-decoration: none;">
 					<h2>Build instructions</h2>
 				</a>
@@ -110,25 +111,25 @@ npm start</code></pre>
 						<a href="globals.html"><em>Globals</em></a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_assets_index_.html">"assets/index"</a>
+						<a href="modules/_assets_index_.html">&quot;assets/index&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_commands_.html">"commands"</a>
+						<a href="modules/_commands_.html">&quot;commands&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_helpers_.html">"helpers"</a>
+						<a href="modules/_helpers_.html">&quot;helpers&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_index_.html">"index"</a>
+						<a href="modules/_index_.html">&quot;index&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_markdown_editor_.html">"markdown-<wbr>editor"</a>
+						<a href="modules/_markdown_editor_.html">&quot;markdown-<wbr>editor&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_text_area_.html">"text-<wbr>area"</a>
+						<a href="modules/_text_area_.html">&quot;text-<wbr>area&quot;</a>
 					</li>
 					<li class=" tsd-kind-external-module">
-						<a href="modules/_undo_redo_.html">"undo-<wbr>redo"</a>
+						<a href="modules/_undo_redo_.html">&quot;undo-<wbr>redo&quot;</a>
 					</li>
 				</ul>
 			</nav>

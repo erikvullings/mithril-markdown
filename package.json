@@ -9,6 +9,7 @@
     "start": "lerna run start --parallel",
     "patch-release": "lerna run patch-release --parallel",
     "minor-release": "lerna run minor-release --parallel",
+    "major-release": "lerna run major-release --parallel",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
