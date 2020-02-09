@@ -1,12 +1,12 @@
-import resolve from 'rollup-plugin-node-resolve';
-import commonjs from 'rollup-plugin-commonjs';
-// import sourceMaps from 'rollup-plugin-sourcemaps';
+import resolve from '@rollup/plugin-node-resolve';
+import sourceMaps from 'rollup-plugin-sourcemaps';
+import json from '@rollup/plugin-json';
 import typescript from 'rollup-plugin-typescript2';
 import postcss from 'rollup-plugin-postcss';
-import json from 'rollup-plugin-json';
 import { terser } from 'rollup-plugin-terser';
 
 const pkg = require('./package.json');
+const production = !process.env.ROLLUP_WATCH;
 
 export default {
   input: `src/index.ts`,
@@ -15,11 +15,12 @@ export default {
     {
       file: pkg.module,
       format: 'es',
+      name: 'mithril-markdown',
       sourcemap: true,
     },
     {
       file: pkg.main,
-      format: 'iife',
+      format: 'umd',
       name: 'MarkdownEditor',
       sourcemap: true,
       globals: {
@@ -41,9 +42,10 @@ export default {
     typescript({
       rollupCommonJSResolveHack: true,
       typescript: require('typescript'),
+      objectHashIgnoreUnknownHack: true,
     }),
     // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
-    commonjs(),
+    // commonjs(),
     // Allow node_modules resolution, so you can use 'external' to control
     // which external modules to include in the bundle
     // https://github.com/rollup/rollup-plugin-node-resolve#usage
@@ -53,8 +55,8 @@ export default {
       },
     }),
     // Resolve source maps to the original source
-    // sourceMaps(),
+    sourceMaps(),
     // minifies generated bundles
-    terser(),
+    production && terser({ sourcemap: true }),
   ],
 };
