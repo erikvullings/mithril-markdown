@@ -11,7 +11,7 @@ export const HomePage = () => ({
           m('h2', 'About mithril-markdown'),
           m('p', [
             `A component for Mithril to edit markdown content. See the `,
-            m('a[href=/markdown-editor]', { oncreate: m.route.link }, 'example.'),
+            m(m.route.Link, { href: '/markdown-editor' }, 'example.'),
           ]),
           m('p', [
             'You can check out the API documentation ',
@@ -38,7 +38,7 @@ npm i --save-dev @types/mithril`,
           dashboardSvc
             .getList()
             .filter(d => d.visible && !d.default)
-            .map(d => m('li.collection-item', m('a', { href: d.route, oncreate: m.route.link }, d.title))),
+            .map(d => m('li.collection-item', m(m.route.Link, { href: d.route }, d.title))),
         ]),
       ]),
     ]),
