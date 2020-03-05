@@ -20,11 +20,15 @@ There is a small [playground](https://flems.io/#0=N4IgzgpgNhDGAuEAmIBcIB08wgDTlg
 
 ```ts
 import m from 'mithril';
+import { render } from 'slimdown-js'; // To render the markdown to HTML
+// import marked from 'marked'; // Alternative markdown renderer, which uses more code but also has more features.
 import { MarkdownEditor } from 'mithril-markdown';
 
 ...
 
   m(MarkdownEditor, {
+    parse: render,
+    // parse: marked,
     preview: 500,
     markdown: state.markdown,
     onchange: (markdown) => {
