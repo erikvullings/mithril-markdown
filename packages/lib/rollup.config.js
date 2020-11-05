@@ -1,5 +1,5 @@
-import resolve from '@rollup/plugin-node-resolve';
-import sourceMaps from 'rollup-plugin-sourcemaps';
+// import resolve from '@rollup/plugin-node-resolve';
+// import sourceMaps from 'rollup-plugin-sourcemaps';
 import json from '@rollup/plugin-json';
 import typescript from 'rollup-plugin-typescript2';
 import postcss from 'rollup-plugin-postcss';
@@ -15,14 +15,15 @@ export default {
     {
       file: pkg.module,
       format: 'es',
-      name: 'mithril-markdown',
-      sourcemap: true,
+      // name: 'mithril-markdown',
+      // sourcemap: true,
     },
     {
       file: pkg.main,
       format: 'umd',
-      name: 'MarkdownEditor',
-      sourcemap: true,
+      name: 'markdown-editor',
+      // name: 'MarkdownEditor',
+      // sourcemap: true,
       globals: {
         mithril: 'm',
       },
@@ -40,6 +41,7 @@ export default {
     postcss(),
     // Compile TypeScript files
     typescript({
+      exclude: ['*.d.ts', '**/*.d.ts', '**/*.test.ts', '**/*.test.d.ts'],
       rollupCommonJSResolveHack: true,
       typescript: require('typescript'),
       objectHashIgnoreUnknownHack: true,
@@ -49,13 +51,13 @@ export default {
     // Allow node_modules resolution, so you can use 'external' to control
     // which external modules to include in the bundle
     // https://github.com/rollup/rollup-plugin-node-resolve#usage
-    resolve({
-      customResolveOptions: {
-        moduleDirectory: 'node_modules',
-      },
-    }),
+    // resolve({
+    //   customResolveOptions: {
+    //     moduleDirectory: 'node_modules',
+    //   },
+    // }),
     // Resolve source maps to the original source
-    sourceMaps(),
+    // sourceMaps(),
     // minifies generated bundles
     production && terser({ sourcemap: true }),
   ],

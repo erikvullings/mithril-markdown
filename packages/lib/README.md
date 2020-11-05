@@ -2,6 +2,12 @@
 
 Mithril markdown editor component: click on the HTML to open the markdown editor, edit the markdown, and close it again to render the HTML. Requires a markdown parser to convert the markdown text into HTML. A popular and fast markdown parser is [marked](https://www.npmjs.com/package/marked) for markdown processing. Alternatively, a smaller (and simpler) markdown parser that works too is [slimdown-js](https://www.npmjs.com/package/slimdown-js).
 
+The latest version adds:
+
+- Tooltips (can be turned of by setting `tooltips: false`, or you can add a localized version)
+- Placeholder option, so even when there is no text, the placeholder is shown
+- ButtonSize: you can set the default button size, was changed from 25x25 pixels to 16x16 pixels
+
 ## Installation
 
 Get it from [npm](https://www.npmjs.com/package/mithril-markdown).
@@ -20,15 +26,14 @@ There is a small [playground](https://flems.io/#0=N4IgzgpgNhDGAuEAmIBcIB08wgDTlg
 
 ```ts
 import m from 'mithril';
-import marked from 'marked';
-// import { render } from 'slimdown-js';
+import { render } from 'slimdown-js';
+// import marked from 'marked';
 import { MarkdownEditor } from 'mithril-markdown';
 
 ...
-
   m(MarkdownEditor, {
-    parse: marked,
-    // parse: render,
+    parse: render,
+    // parse: marked,
     preview: 500,
     markdown: '# Hello, world',
     onchange: (markdown) => {
