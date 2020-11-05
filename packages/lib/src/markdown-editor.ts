@@ -9,8 +9,8 @@ import './markdown-editor.css';
 export interface IMarkdownEditor extends Attributes {
   /**
    * Required parser function to parse markdown to HTML. E.g.
-   * import marked from 'marked';
-   * parse: marked
+   * import { render} from 'slimdown-js';
+   * parse: render
    */
   parse: (markdown: string) => string;
   /** Markdown to render */
@@ -23,13 +23,35 @@ export interface IMarkdownEditor extends Attributes {
   autoResize?: boolean;
   /** Add a preview when the value is true, or a number is specified (taken as the height of the area) */
   preview?: boolean | number;
+  /** Placeholder to show when there is no content (so you can still edit it). @default '_Click here to edit_' */
+  placeholder?: string;
   /**
    * When a change occurs, the updated markdown is returned, as well as the HTML.
    * The returned markdown should be used as the markdown input for the editor in
    * order to continue editing.
    */
   onchange?: (markdown: string, html: string) => void;
+  /** Size of the menu buttons, @default 16 pixels square */
+  buttonSize?: number;
+  /** Optional tooltips. When `false`, no tooltips are shown */
+  tooltips?: Record<TooltipKey, string> | false;
 }
+
+export type TooltipKey =
+  | 'bold'
+  | 'italics'
+  | 'inline'
+  | 'strikethrough'
+  | 'link'
+  | 'image'
+  | 'code'
+  | 'unordered'
+  | 'ordered'
+  | 'block'
+  | 'undo'
+  | 'redo'
+  | 'visibility'
+  | 'close';
 
 export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
   const state = {
@@ -38,6 +60,23 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     isEditing: false,
     shortcuts: {},
     selection: { selectionStart: 0, selectionEnd: 0 },
+    buttonSize: 16,
+    tooltips: {
+      bold: 'Bold text',
+      italics: 'Italics text',
+      inline: 'Inline code',
+      strikethrough: 'Strike-through',
+      link: 'Create link',
+      image: 'Create image link',
+      code: 'Code block',
+      unordered: 'Bullet list',
+      ordered: 'Numbered list',
+      block: 'Blockquote',
+      undo: 'Undo',
+      redo: 'Redo',
+      visibility: 'Toggle output',
+      close: 'Stop editing',
+    } as Record<TooltipKey, string>,
   } as {
     onchange?: (markdown: string, html: string) => void;
     parse: (markdown: string) => string;
@@ -52,6 +91,8 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
     previewDom?: HTMLDivElement;
     showPreview?: boolean;
     showPreviewHeight?: number;
+    buttonSize: number;
+    tooltips: Record<TooltipKey, string> | false;
   };
 
   const runCmd = (cmd: ICommandConfig) => {
@@ -150,7 +191,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
   };
 
   return {
-    oninit: ({ attrs: { markdown, onchange, parse, undoLimit = 10, preview } }) => {
+    oninit: ({ attrs: { markdown, onchange, parse, undoLimit = 10, preview, buttonSize, tooltips } }) => {
       if (preview) {
         state.showPreview = true;
         if (typeof preview === 'number') {
@@ -159,6 +200,12 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
       }
 
       const { selection } = state;
+      if (buttonSize) {
+        state.buttonSize = buttonSize;
+      }
+      if (typeof tooltips !== 'undefined') {
+        state.tooltips = tooltips;
+      }
       state.markdown = markdown;
       state.html = parse(markdown);
       state.parse = parse;
@@ -166,11 +213,11 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
       state.undo = undoRedo(
         { markdown, selection },
         undoLimit,
-        s => setLinkStyle(state.undoDom, s),
-        s => setLinkStyle(state.redoDom, s)
+        (s) => setLinkStyle(state.undoDom, s),
+        (s) => setLinkStyle(state.redoDom, s)
       );
       state.shortcuts = [
-        ...commands.filter(cmd => cmd.shortcut).map(cmd => ({ key: cmd.shortcut, cmd: () => runCmd(cmd) })),
+        ...commands.filter((cmd) => cmd.shortcut).map((cmd) => ({ key: cmd.shortcut, cmd: () => runCmd(cmd) })),
         { key: 'CTRL+Z', cmd: () => undoRedoCmd(true) },
         { key: 'CTRL+Y', cmd: () => undoRedoCmd(false) },
         { key: 'CTRL+S', cmd: () => stopEditingCmd() },
@@ -179,8 +226,21 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
         return acc;
       }, {} as { [key: string]: () => void });
     },
-    view: ({ attrs: { autoResize = true, preview, disabled, ...props } }) => {
-      const { html, isEditing, markdown, selection, undo, showPreview, showPreviewHeight: previewHeight } = state;
+    view: ({
+      attrs: { onchange, placeholder = '_Click here to edit_', autoResize = true, preview, disabled, ...props },
+    }) => {
+      const {
+        html,
+        isEditing,
+        markdown,
+        selection,
+        undo,
+        showPreview,
+        showPreviewHeight: previewHeight,
+        buttonSize,
+        tooltips,
+      } = state;
+      state.onchange = onchange;
 
       return isEditing
         ? m(
@@ -192,45 +252,76 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
             },
             [
               m('.markdown-editor-button-group', [
-                ...commands.map(cmd =>
-                  m(
-                    'button.markdown-editor-button',
-                    { onclick: () => runCmd(cmd) },
-                    cmd.icon ? m('img', { width: '25', height: '25', src: cmd.icon, alt: cmd.name }) : cmd.name
-                  )
+                ...commands.map((cmd) =>
+                  m('button.markdown-editor-button.markdown-tooltip', { onclick: () => runCmd(cmd) }, [
+                    m('img', {
+                      width: buttonSize,
+                      height: buttonSize,
+                      src: cmd.icon,
+                      alt: cmd.name,
+                    }),
+                    tooltips &&
+                      m(
+                        'span.markdown-tooltiptext',
+                        tooltips[(cmd.name.split(' ').shift() || cmd.name).toLowerCase() as TooltipKey]
+                      ),
+                  ])
                 ),
                 m(
-                  'button.markdown-editor-button',
+                  'button.markdown-editor-button.markdown-tooltip',
                   {
                     className: undo.canRedo() ? undefined : 'disabled',
                     onclick: () => undo.canRedo() && undoRedoCmd(false),
                     oncreate: ({ dom }) => (state.redoDom = dom as HTMLAnchorElement),
                   },
-                  m('img', { width: '25', height: '25', src: redoIcon, alt: 'REDO' })
+                  [
+                    m('img', {
+                      width: buttonSize,
+                      height: buttonSize,
+                      src: redoIcon,
+                      alt: 'REDO',
+                    }),
+                    tooltips && m('span.markdown-tooltiptext', tooltips['redo']),
+                  ]
                 ),
                 m(
-                  'button.markdown-editor-button',
+                  'button.markdown-editor-button.markdown-tooltip',
                   {
                     className: undo.canUndo() ? undefined : 'disabled',
                     onclick: () => undo.canUndo() && undoRedoCmd(true),
                     oncreate: ({ dom }) => (state.undoDom = dom as HTMLAnchorElement),
                   },
-                  m('img', { width: '25', height: '25', src: undoIcon, alt: 'UNDO' })
+                  [
+                    m('img', {
+                      width: buttonSize,
+                      height: buttonSize,
+                      src: undoIcon,
+                      alt: 'UNDO',
+                    }),
+                    tooltips && m('span.markdown-tooltiptext', tooltips['undo']),
+                  ]
                 ),
-                m(
-                  'button.markdown-editor-button.markdown-editor-right',
-                  { onclick: stopEditingCmd },
-                  m('img', { width: '25', height: '25', src: stopIcon, alt: 'STOP' })
-                ),
-                m(
-                  'button.markdown-editor-button.markdown-editor-right',
-                  { onclick: () => (state.showPreview = !showPreview) },
+                m('button.markdown-editor-button.markdown-editor-right.markdown-tooltip', { onclick: stopEditingCmd }, [
                   m('img', {
-                    width: '25',
-                    height: '25',
-                    src: showPreview ? visibilityOnIcon : visibilityOffIcon,
-                    alt: 'VISIBILITY',
-                  })
+                    width: buttonSize,
+                    height: buttonSize,
+                    src: stopIcon,
+                    alt: 'STOP',
+                  }),
+                  tooltips && m('span.markdown-tooltiptext', tooltips['close']),
+                ]),
+                m(
+                  'button.markdown-editor-button.markdown-editor-right.markdown-tooltip',
+                  { onclick: () => (state.showPreview = !showPreview) },
+                  [
+                    m('img', {
+                      width: buttonSize,
+                      height: buttonSize,
+                      src: showPreview ? visibilityOnIcon : visibilityOffIcon,
+                      alt: 'VISIBILITY',
+                    }),
+                    tooltips && m('span.markdown-tooltiptext', tooltips['visibility']),
+                  ]
                 ),
               ]),
               m(TextArea, {
@@ -269,7 +360,7 @@ export const MarkdownEditor: FactoryComponent<IMarkdownEditor> = () => {
                     state.isEditing = !isLinkClicked(e);
                   },
             },
-            m.trust(html)
+            m.trust(html || state.parse(placeholder))
           );
     },
   };

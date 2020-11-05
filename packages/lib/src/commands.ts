@@ -108,8 +108,8 @@ const imageCommandConfig = {
   offsets: [0, 15],
 } as ICommandConfig;
 
-const codeInlineCommandConfig = {
-  name: 'Code inline',
+const codeBlockCommandConfig = {
+  name: 'Code block',
   icon: codeIcon,
   detect: /^```\r?\n[\S\s]+\r?\n```\s*$/i,
   multiline: true,
@@ -159,7 +159,7 @@ export const commands = [
   strikethroughCommandConfig,
   linkCommandConfig,
   imageCommandConfig,
-  codeInlineCommandConfig,
+  codeBlockCommandConfig,
   unorderedListCommandConfig,
   orderedListCommandConfig,
   blockQuoteCommandConfig,
