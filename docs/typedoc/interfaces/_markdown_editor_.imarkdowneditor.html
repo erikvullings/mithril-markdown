@@ -99,6 +99,7 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_markdown_editor_.imarkdowneditor.html#autoresize" class="tsd-kind-icon">auto<wbr>Resize</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_markdown_editor_.imarkdowneditor.html#buttonsize" class="tsd-kind-icon">button<wbr>Size</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_markdown_editor_.imarkdowneditor.html#class" class="tsd-kind-icon">class</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-inherited"><a href="_markdown_editor_.imarkdowneditor.html#classname" class="tsd-kind-icon">class<wbr>Name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_markdown_editor_.imarkdowneditor.html#disabled" class="tsd-kind-icon">disabled</a></li>
@@ -106,7 +107,9 @@
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_markdown_editor_.imarkdowneditor.html#markdown" class="tsd-kind-icon">markdown</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_markdown_editor_.imarkdowneditor.html#onchange" class="tsd-kind-icon">onchange</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_markdown_editor_.imarkdowneditor.html#parse" class="tsd-kind-icon">parse</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_markdown_editor_.imarkdowneditor.html#placeholder" class="tsd-kind-icon">placeholder</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_markdown_editor_.imarkdowneditor.html#preview" class="tsd-kind-icon">preview</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_markdown_editor_.imarkdowneditor.html#tooltips" class="tsd-kind-icon">tooltips</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-interface"><a href="_markdown_editor_.imarkdowneditor.html#undolimit" class="tsd-kind-icon">undo<wbr>Limit</a></li>
 							</ul>
 						</section>
@@ -132,12 +135,27 @@
 					<div class="tsd-signature tsd-kind-icon">auto<wbr>Resize<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/9bb473a/packages/lib/src/markdown-editor.ts#L23">src/markdown-editor.ts:23</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/fb7ed30/packages/lib/src/markdown-editor.ts#L23">src/markdown-editor.ts:23</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Should the textarea automatically resize</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="buttonsize" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> button<wbr>Size</h3>
+					<div class="tsd-signature tsd-kind-icon">button<wbr>Size<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/fb7ed30/packages/lib/src/markdown-editor.ts#L35">src/markdown-editor.ts:35</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Size of the menu buttons, @default 16 pixels square</p>
 						</div>
 					</div>
 				</section>
@@ -148,7 +166,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_text_area_.itextarea.html">ITextArea</a>.<a href="_text_area_.itextarea.html#class">class</a></p>
 						<ul>
-							<li>Defined in node_modules/.pnpm/registry.npmjs.org/@types/mithril/2.0.2/node_modules/@types/mithril/index.d.ts:289</li>
+							<li>Defined in node_modules/.pnpm/@types/mithril@2.0.6/node_modules/@types/mithril/index.d.ts:302</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -164,7 +182,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_text_area_.itextarea.html">ITextArea</a>.<a href="_text_area_.itextarea.html#classname">className</a></p>
 						<ul>
-							<li>Defined in node_modules/.pnpm/registry.npmjs.org/@types/mithril/2.0.2/node_modules/@types/mithril/index.d.ts:287</li>
+							<li>Defined in node_modules/.pnpm/@types/mithril@2.0.6/node_modules/@types/mithril/index.d.ts:300</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -179,7 +197,7 @@
 					<div class="tsd-signature tsd-kind-icon">disabled<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/9bb473a/packages/lib/src/markdown-editor.ts#L19">src/markdown-editor.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/fb7ed30/packages/lib/src/markdown-editor.ts#L19">src/markdown-editor.ts:19</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -195,7 +213,7 @@
 					<aside class="tsd-sources">
 						<p>Inherited from <a href="_text_area_.itextarea.html">ITextArea</a>.<a href="_text_area_.itextarea.html#key">key</a></p>
 						<ul>
-							<li>Defined in node_modules/.pnpm/registry.npmjs.org/@types/mithril/2.0.2/node_modules/@types/mithril/index.d.ts:291</li>
+							<li>Defined in node_modules/.pnpm/@types/mithril@2.0.6/node_modules/@types/mithril/index.d.ts:304</li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -210,7 +228,7 @@
 					<div class="tsd-signature tsd-kind-icon">markdown<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/9bb473a/packages/lib/src/markdown-editor.ts#L17">src/markdown-editor.ts:17</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/fb7ed30/packages/lib/src/markdown-editor.ts#L17">src/markdown-editor.ts:17</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -225,7 +243,7 @@
 					<div class="tsd-signature tsd-kind-icon">onchange<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">(</span>markdown<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span>, html<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">void</span><span class="tsd-signature-symbol">)</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/9bb473a/packages/lib/src/markdown-editor.ts#L31">src/markdown-editor.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/fb7ed30/packages/lib/src/markdown-editor.ts#L33">src/markdown-editor.ts:33</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -242,14 +260,14 @@
 					<div class="tsd-signature tsd-kind-icon">parse<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">(</span>markdown<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol"> =&gt; </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/9bb473a/packages/lib/src/markdown-editor.ts#L15">src/markdown-editor.ts:15</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/fb7ed30/packages/lib/src/markdown-editor.ts#L15">src/markdown-editor.ts:15</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
 							<p>Required parser function to parse markdown to HTML. E.g.
-								import marked from &#39;marked&#39;;
-							parse: marked</p>
+								import { render} from &#39;slimdown-js&#39;;
+							parse: render</p>
 						</div>
 					</div>
 					<div class="tsd-type-declaration">
@@ -275,12 +293,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="placeholder" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> placeholder</h3>
+					<div class="tsd-signature tsd-kind-icon">placeholder<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/fb7ed30/packages/lib/src/markdown-editor.ts#L27">src/markdown-editor.ts:27</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Placeholder to show when there is no content (so you can still edit it). @default &#39;<em>Click here to edit</em>&#39;</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="preview" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> preview</h3>
 					<div class="tsd-signature tsd-kind-icon">preview<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/9bb473a/packages/lib/src/markdown-editor.ts#L25">src/markdown-editor.ts:25</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/fb7ed30/packages/lib/src/markdown-editor.ts#L25">src/markdown-editor.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -290,12 +323,27 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
+					<a name="tooltips" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> tooltips</h3>
+					<div class="tsd-signature tsd-kind-icon">tooltips<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Record</span><span class="tsd-signature-symbol">&lt;</span><a href="../modules/_markdown_editor_.html#tooltipkey" class="tsd-signature-type">TooltipKey</a><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/fb7ed30/packages/lib/src/markdown-editor.ts#L37">src/markdown-editor.ts:37</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Optional tooltips. When <code>false</code>, no tooltips are shown</p>
+						</div>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface">
 					<a name="undolimit" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> undo<wbr>Limit</h3>
 					<div class="tsd-signature tsd-kind-icon">undo<wbr>Limit<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/9bb473a/packages/lib/src/markdown-editor.ts#L21">src/markdown-editor.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/erikvullings/mithril-markdown/blob/fb7ed30/packages/lib/src/markdown-editor.ts#L21">src/markdown-editor.ts:21</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -318,7 +366,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_text_area_.itextarea.html">ITextArea</a>.<a href="_text_area_.itextarea.html#onbeforeremove">onbeforeremove</a></p>
 								<ul>
-									<li>Defined in node_modules/.pnpm/registry.npmjs.org/@types/mithril/2.0.2/node_modules/@types/mithril/index.d.ts:32</li>
+									<li>Defined in node_modules/.pnpm/@types/mithril@2.0.6/node_modules/@types/mithril/index.d.ts:32</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -350,7 +398,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_text_area_.itextarea.html">ITextArea</a>.<a href="_text_area_.itextarea.html#onbeforeupdate">onbeforeupdate</a></p>
 								<ul>
-									<li>Defined in node_modules/.pnpm/registry.npmjs.org/@types/mithril/2.0.2/node_modules/@types/mithril/index.d.ts:36</li>
+									<li>Defined in node_modules/.pnpm/@types/mithril@2.0.6/node_modules/@types/mithril/index.d.ts:36</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -385,7 +433,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_text_area_.itextarea.html">ITextArea</a>.<a href="_text_area_.itextarea.html#oncreate">oncreate</a></p>
 								<ul>
-									<li>Defined in node_modules/.pnpm/registry.npmjs.org/@types/mithril/2.0.2/node_modules/@types/mithril/index.d.ts:30</li>
+									<li>Defined in node_modules/.pnpm/@types/mithril@2.0.6/node_modules/@types/mithril/index.d.ts:30</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -417,7 +465,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_text_area_.itextarea.html">ITextArea</a>.<a href="_text_area_.itextarea.html#oninit">oninit</a></p>
 								<ul>
-									<li>Defined in node_modules/.pnpm/registry.npmjs.org/@types/mithril/2.0.2/node_modules/@types/mithril/index.d.ts:28</li>
+									<li>Defined in node_modules/.pnpm/@types/mithril@2.0.6/node_modules/@types/mithril/index.d.ts:28</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -449,7 +497,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_text_area_.itextarea.html">ITextArea</a>.<a href="_text_area_.itextarea.html#onremove">onremove</a></p>
 								<ul>
-									<li>Defined in node_modules/.pnpm/registry.npmjs.org/@types/mithril/2.0.2/node_modules/@types/mithril/index.d.ts:34</li>
+									<li>Defined in node_modules/.pnpm/@types/mithril@2.0.6/node_modules/@types/mithril/index.d.ts:34</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -481,7 +529,7 @@
 							<aside class="tsd-sources">
 								<p>Inherited from <a href="_text_area_.itextarea.html">ITextArea</a>.<a href="_text_area_.itextarea.html#onupdate">onupdate</a></p>
 								<ul>
-									<li>Defined in node_modules/.pnpm/registry.npmjs.org/@types/mithril/2.0.2/node_modules/@types/mithril/index.d.ts:38</li>
+									<li>Defined in node_modules/.pnpm/@types/mithril@2.0.6/node_modules/@types/mithril/index.d.ts:38</li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -543,6 +591,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_markdown_editor_.imarkdowneditor.html#autoresize" class="tsd-kind-icon">auto<wbr>Resize</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_markdown_editor_.imarkdowneditor.html#buttonsize" class="tsd-kind-icon">button<wbr>Size</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-inherited">
 								<a href="_markdown_editor_.imarkdowneditor.html#class" class="tsd-kind-icon">class</a>
 							</li>
@@ -565,7 +616,13 @@
 								<a href="_markdown_editor_.imarkdowneditor.html#parse" class="tsd-kind-icon">parse</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_markdown_editor_.imarkdowneditor.html#placeholder" class="tsd-kind-icon">placeholder</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_markdown_editor_.imarkdowneditor.html#preview" class="tsd-kind-icon">preview</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-interface">
+								<a href="_markdown_editor_.imarkdowneditor.html#tooltips" class="tsd-kind-icon">tooltips</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-interface">
 								<a href="_markdown_editor_.imarkdowneditor.html#undolimit" class="tsd-kind-icon">undo<wbr>Limit</a>
@@ -592,6 +649,9 @@
 					</li>
 				</ul>
 				<ul class="after-current">
+					<li class=" tsd-kind-type-alias tsd-parent-kind-external-module">
+						<a href="../modules/_markdown_editor_.html#tooltipkey" class="tsd-kind-icon">Tooltip<wbr>Key</a>
+					</li>
 					<li class=" tsd-kind-function tsd-parent-kind-external-module">
 						<a href="../modules/_markdown_editor_.html#markdowneditor" class="tsd-kind-icon">Markdown<wbr>Editor</a>
 					</li>

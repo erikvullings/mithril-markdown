@@ -68,6 +68,12 @@
 					<h1>mithril-markdown</h1>
 				</a>
 				<p>Mithril markdown editor component: click on the HTML to open the markdown editor, edit the markdown, and close it again to render the HTML. Requires a markdown parser to convert the markdown text into HTML. A popular and fast markdown parser is <a href="https://www.npmjs.com/package/marked">marked</a> for markdown processing. Alternatively, a smaller (and simpler) markdown parser that works too is <a href="https://www.npmjs.com/package/slimdown-js">slimdown-js</a>.</p>
+				<p>The latest version adds:</p>
+				<ul>
+					<li>Tooltips (can be turned of by setting <code>tooltips: false</code>, or you can add a localized version)</li>
+					<li>Placeholder option, so even when there is no text, the placeholder is shown</li>
+					<li>ButtonSize: you can set the default button size, was changed from 25x25 pixels to 16x16 pixels</li>
+				</ul>
 				<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
 					<h2>Installation</h2>
 				</a>
@@ -78,20 +84,21 @@ npm i --save-dev @types/mithril</code></pre>
 				<a href="#playground" id="playground" style="color: inherit; text-decoration: none;">
 					<h2>Playground</h2>
 				</a>
-				<p>There is a small <a href="https://flems.io/#0=N4IgZglgNgpgziAXAbVAOwIYFsZJAOgAsAXLKEAGhAGMB7NYmBvEAXwvW10QICsEqdBk2J4IWAA60ATsQAEcrHLDTaSgORYIxQtOgABNDAAexdQG4AOmnFTZc4HICyGaQGsAJrQDuaAKIe2jJyrMqqGlo6elAAtFiunj5oFtbWQnDyJtgSsHIAvHIAFACU+QB8DtYK6fIZGIz5lWgKCvHuXr6IcgAG1gDEcgDChBgSjNKpaH0DAMow1MQQ9JMAVCuDADIAkoMA0nIA8gByzn5yACoHcjPnAIIASudyfgAiW+dbRwDia5MAahA4No5MgvrRaABzWAAXUKJGIEjgiAA9MjvOj8BDwVCYPg6FhivhJudCIC5GSMHI4IQZPIoBAjES0NYjj45DoyRS5AA3GDSACecig9AhQoZMAo5OEaA8MA87Nocm80lGUvZhBgcjlQWk+DkACEAK7ybzaGnGsVGABG0hgGDccElcEV3g1zW8mokfLAMiUlKwhqgi3pRjkGAWSzQkuB1NogflVs1xFt9TlYbgYapDJxltxxNJGa5sfs9IyTL84cIufJGbgMAkrlTCcFlJDMBtdrcTKcgeD4rDEfotfNUATnu9vrT9C1ldzTN6zRCVTktuIhukzWAy4U3IgMG8XRK5SaLRaNQcigSHWaoQKdUYVkXp9X6+aWEKLnaSQCOsljjaiS+CExTbiEFDLqw1iQcyaBYPgWBxgwhReNQho4Aw+BWrQHj8pKWSSLAxSUCAdawIOaAIDwACMAAciAAExUWwHAgJgOB4HicACDQ9CMMwPD4HoEIkCeyjCvUXRCSJACEti0hgDCPtBjCmK4dqiaaHg6F0VEAAy6QApI+ChWuGbgQqohoyjEdDCtIXTJgpcANrailQcRpHzIsQ54AALIgVG+Ww0KsEAA">playground</a> on <a href="https://flems.io">flems.io</a>.</p>
+				<p>There is a small <a href="https://flems.io/#0=N4IgzgpgNhDGAuEAmIBcIB08wgDTlgCcB7KKNAbQAZcqBdfAMwEsYdULQA7AQwFsIaTNjwhYxLoklDmfAA7FC8AATBlhCFyQRCygL7LGJPsoDkYKLKTEA7lwC0AKzCmA3AB0u4rmBUBZAE8-HkIAa2s7AFEkZnhFZQBeZWCwiK5o2MUMFPDbdJi4wg8uT29fZQAFHgBzCETlAAoASkSAPlVPZWUYFT4Q3Lt6gANPAGJlAGEACx45REJPMfGAZTh4ZglFrgAqbYmAGQBJCYBpZQB5ADlkyOUAFXPlZbuAQQAlO+VIgBFDu8PLgBxXZbABqzDAsWUFEBxGI1RgdAaU3g8DkYFQAHpMTZcRhqnCERAMOI+E0MFs7lMIcoaTxlGApooVJYuMStpdbMp4NSwLS+fSAG46ALdCTVbrMNm4WmSTTaJDc4jKGyEWay7lTOrITKEDDKABCAFcVDZYkyTZK2QAjDQ8UJgGVgZU2LVcFV1OQ6RiKEz0vhGqDrVl1HgIDZcGVQxnEQOK611eB2xCKngChlSolW9klLhUml0hlMpSS3wU9JhqbZ-kMiByEI8FPKa2i+kh20Qe3lvyB4NS0PhiR8mNx5ue72+5DKCTKTuwKsh8ueZZMuRyTOl+CoTz2ZSHRAmACMO73B+UACZPENip11BB4EbCO7gLeuoLmBAbKhGi0Eu0X+6XRARoD5PsofANIEORpBkhQymo9aEJA34aFoOgyn0qR5DKcgaO+n7fgALFQVD6E0r76Lgt56J4NG5nwGB8LGkgNNYsBGgIkgYNaxBIAEMpVLUTSiJAMCDj4QgAMySag54AOwgHoDAgKyDqUNw-CCOgfDmoQrCiI+5DoCiaIYtiRpcHIoTVCSxB8JiOk8npUAAALnhgVAYIRDm6awjFShgziiPAARekIYBEMwcyKbgGkCEIjlTM59iYQMXAGYQRkgCZ6JYpiFlWTZpI+U5rApf0aQuZ5kkeZiMS+CVSVlalaSBTg+AhWF6ARXp0X4KJawRuwICHgArLJACcABsVCjYpdB6EAA">playground</a> on <a href="https://flems.io">flems.io</a>.</p>
 				<a href="#usage-example" id="usage-example" style="color: inherit; text-decoration: none;">
 					<h2>Usage example</h2>
 				</a>
 				<pre><code class="language-ts"><span class="hljs-keyword">import</span> m <span class="hljs-keyword">from</span> <span class="hljs-string">'mithril'</span>;
-<span class="hljs-keyword">import</span> marked <span class="hljs-keyword">from</span> <span class="hljs-string">'marked'</span>;
+<span class="hljs-keyword">import</span> { render } <span class="hljs-keyword">from</span> <span class="hljs-string">'slimdown-js'</span>;
+<span class="hljs-comment">// import marked from 'marked';</span>
 <span class="hljs-keyword">import</span> { MarkdownEditor } <span class="hljs-keyword">from</span> <span class="hljs-string">'mithril-markdown'</span>;
 
 ...
-
   m(MarkdownEditor, {
-    parse: marked,
+    parse: render,
+    <span class="hljs-comment">// parse: marked,</span>
     preview: <span class="hljs-number">500</span>,
-    markdown: state.markdown,
+    markdown: <span class="hljs-string">'# Hello, world'</span>,
     onchange: <span class="hljs-function">(<span class="hljs-params">markdown</span>) =&gt;</span> {
       <span class="hljs-built_in">console</span>.log(markdown);
     },
