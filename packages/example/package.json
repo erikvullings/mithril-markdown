@@ -23,7 +23,7 @@
     "material-icons": "^1.1.0",
     "materialize-css": "^1.0.0",
     "mithril": "2.0.4",
-    "mithril-markdown": "^0.4.0",
+    "mithril-markdown": "workspace:*",
     "mithril-materialized": "^0.19.0",
     "slimdown-js": "0.4.1"
   },
