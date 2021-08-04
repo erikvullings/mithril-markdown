@@ -44,7 +44,7 @@ export default {
       exclude: ['*.d.ts', '**/*.d.ts', '**/*.test.ts', '**/*.test.d.ts'],
       rollupCommonJSResolveHack: true,
       typescript: require('typescript'),
-      objectHashIgnoreUnknownHack: true,
+      // objectHashIgnoreUnknownHack: true,
     }),
     // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
     // commonjs(),

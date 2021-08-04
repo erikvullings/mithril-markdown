@@ -39,6 +39,7 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.4",
     "@types/mithril": "^2.0.8",
+    "postcss": "^8.3.6",
     "autoprefixer": "^10.3.1",
     "rimraf": "3.0.2",
     "rollup": "^2.55.1",

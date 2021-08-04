@@ -16,7 +16,7 @@ module.exports = (env) => {
     entry: './src/app.ts',
     devtool: isProduction ? 'source-map' : 'inline-source-map',
     devServer: {
-      port: 1234,
+      port: 1235,
       contentBase: './dist',
     },
     plugins: [
