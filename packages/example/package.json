@@ -4,9 +4,9 @@
   "version": "0.0.1",
   "description": "Example project voor the mithril-markdown library.",
   "scripts": {
-    "start": "parcel index.html --out-dir ../../docs",
     "build:domain": "rm -fr ../../docs && parcel build index.html --out-dir ../../docs --public-url https://erikvullings.github.io/mithril-markdown && cp favicon.ico ../../docs/",
-    "build": "npm run clean && parcel build index.html",
+    "start": "webpack serve --env development --open",
+    "build": "webpack --env production",
     "clean": "rimraf dist .cache"
   },
   "keywords": [
@@ -19,22 +19,28 @@
   "author": "Erik Vullings <erik.vullings@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "marked": "^0.8.2",
-    "material-icons": "^0.3.1",
+    "marked": "^2.1.3",
+    "material-icons": "^1.1.0",
     "materialize-css": "^1.0.0",
     "mithril": "2.0.4",
-    "mithril-markdown": "^0.2.2",
-    "mithril-materialized": "^0.16.5",
-    "slimdown-js": "0.2.1"
+    "mithril-markdown": "^0.4.0",
+    "mithril-materialized": "^0.19.0",
+    "slimdown-js": "0.4.1"
   },
   "devDependencies": {
-    "@types/marked": "^0.7.4",
-    "@types/materialize-css": "^1.0.8",
-    "@types/mithril": "^2.0.6",
-    "autoprefixer": "^9.8.6",
-    "cssnano": "^4.1.10",
-    "parcel-bundler": "^1.12.4",
-    "rimraf": "3.0.1",
-    "typescript": "^3.9.7"
+    "@types/marked": "^2.0.4",
+    "@types/materialize-css": "^1.0.11",
+    "@types/mithril": "^2.0.8",
+    "css-loader": "^6.2.0",
+    "css-minimizer-webpack-plugin": "^3.0.2",
+    "dotenv-webpack": "^7.0.3",
+    "html-webpack-plugin": "^5.3.2",
+    "html-webpack-tags-plugin": "^3.0.1",
+    "mini-css-extract-plugin": "^2.1.0",
+    "rimraf": "3.0.2",
+    "typescript": "^4.3.5",
+    "webpack": "^5.48.0",
+    "webpack-cli": "^4.7.2",
+    "webpack-dev-server": "^3.11.2"
   }
 }
