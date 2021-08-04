@@ -68,6 +68,7 @@ Shopping list
         m('h4', "Using 'slimdown-js' for processing markdown"),
         m(MarkdownEditor, {
           placeholder,
+          isEditing: true,
           parse: render,
           preview: 400,
           markdown: state.markdown,
